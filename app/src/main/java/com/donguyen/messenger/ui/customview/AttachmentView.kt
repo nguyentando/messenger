@@ -2,8 +2,8 @@ package com.donguyen.messenger.ui.customview
 
 import android.content.Context
 import android.util.AttributeSet
-import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.donguyen.domain.model.Attachment
 import com.donguyen.messenger.R
@@ -17,7 +17,7 @@ class AttachmentView @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
         defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr) {
+) : LinearLayout(context, attrs, defStyleAttr) {
 
     var attachment: Attachment? = null
 
@@ -25,8 +25,10 @@ class AttachmentView @JvmOverloads constructor(
     private val attachmentTitleTxt: TextView
 
     init {
-        // TODO - inflate attachmentImg and attachmentTitleTxt directly to AttachmentView
-        inflate(context, R.layout.view_attachment, this)
+        orientation = VERTICAL
+        setBackgroundResource(R.drawable.bg_gray_stroke_corner)
+        inflate(context, R.layout.view_attachment_image, this)
+        inflate(context, R.layout.view_attachment_title, this)
         attachmentImg = findViewById(R.id.attachment_img)
         attachmentTitleTxt = findViewById(R.id.attachment_title_txt)
     }
