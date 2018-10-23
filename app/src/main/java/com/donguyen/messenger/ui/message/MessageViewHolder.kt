@@ -87,6 +87,7 @@ abstract class MessageViewHolder(view: View,
             attachmentView.apply {
                 updateAttachment(attachment)
                 setOnLongClickListener {
+                    // TODO - prevent recycler view from listening to this event and turn on selection mode
                     AlertDialog.Builder(context)
                             .setItems(menuItems) { _, _ ->
                                 listener?.onDeleteAttachment(attachment)

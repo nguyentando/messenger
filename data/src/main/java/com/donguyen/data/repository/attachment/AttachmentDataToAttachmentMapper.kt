@@ -14,11 +14,11 @@ class AttachmentDataToAttachmentMapper @Inject constructor() : Mapper<Attachment
 
     override fun mapFrom(from: AttachmentData): Attachment {
         return Attachment(
-            id = from.id,
-            title = from.title,
-            url = from.url,
-            thumbnailUrl = from.thumbnailUrl,
-            messageId = from.messageId
+                id = from.id,
+                title = from.title,
+                url = from.url,
+                thumbnailUrl = from.thumbnailUrl,
+                messageId = from.messageId
         )
     }
 }

@@ -11,12 +11,12 @@ import com.google.gson.annotations.SerializedName
 @Entity(tableName = "users")
 data class UserData(
 
-    @PrimaryKey
-    val id: Long,
+        @PrimaryKey
+        val id: Long,
 
-    val name: String,
+        val name: String,
 
-    @ColumnInfo(name = "avatar_url")
-    @SerializedName("avatarId")
-    val avatarUrl: String
+        @ColumnInfo(name = "avatar_url")
+        @SerializedName("avatarId")
+        val avatarUrl: String
 )
