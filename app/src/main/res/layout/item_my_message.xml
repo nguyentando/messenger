@@ -13,7 +13,9 @@
         android:background="@drawable/bg_gray_solid_corner"
         android:gravity="end" />
 
-    <!-- TODO - add AttachmentViews directly into the root view -->
+    <!-- TODO - add AttachmentViews directly into the root view
+    Drawback: the code will be messier, and it might change in the future,
+    because when the message view become more complex, we have to change the root view -->
     <LinearLayout
         android:id="@+id/attachments_container"
         android:layout_width="match_parent"

@@ -15,6 +15,7 @@ import com.donguyen.messenger.R
 import com.donguyen.messenger.ui.message.selection.MessageItemDetailsLookup
 import com.donguyen.messenger.ui.message.selection.MessageItemKeyProvider
 import com.donguyen.messenger.util.extension.irisApplication
+import com.donguyen.messenger.util.extension.show
 import com.donguyen.messenger.util.extension.toast
 import kotlinx.android.synthetic.main.activity_messages.*
 import javax.inject.Inject
@@ -96,8 +97,17 @@ class MessagesActivity : AppCompatActivity(), MessageViewHolder.OnDeleteAttachme
     private fun handleViewState(state: MessagesViewState?) {
         state ?: return
         messagesAdapter.submitList(state.messages)
+
+        // handle empty view
+        val isEmpty = state.messages?.isEmpty() ?: false
+        empty_txt.show(isEmpty)
+        recycler_view.show(!isEmpty)
+
+        // handle loading view
+        progress_bar.show(state.loading)
+
+        // handle error
         if (state.error.isNotEmpty()) this.toast(state.error)
-        // TODO - handle loading
     }
 
     // ---------------------------------------------------------------------------------------------
