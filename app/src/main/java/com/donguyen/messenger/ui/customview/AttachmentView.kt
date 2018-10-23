@@ -49,4 +49,9 @@ class AttachmentView @JvmOverloads constructor(
 
         attachmentTitleTxt.text = attachment?.title
     }
+
+    fun clear() {
+        attachment = null
+        attachmentImg.setImageDrawable(null)
+    }
 }

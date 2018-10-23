@@ -56,6 +56,11 @@ class MessagesAdapter(var listener: MessageViewHolder.OnDeleteAttachmentListener
         holder.bind(message, position, isSelected)
     }
 
+    override fun onViewRecycled(holder: MessageViewHolder) {
+        super.onViewRecycled(holder)
+        holder.clear()
+    }
+
     companion object {
         private val COMPARATOR = object : DiffUtil.ItemCallback<Message>() {
 

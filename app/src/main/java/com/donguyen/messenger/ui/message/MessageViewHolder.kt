@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.forEach
 import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.widget.RecyclerView
 import com.donguyen.domain.model.Attachment
@@ -105,6 +106,12 @@ abstract class MessageViewHolder(view: View,
         return MessageItemDetails(adapterPosition, adapter.getMessage(adapterPosition)!!)
     }
 
+    open fun clear() {
+        attachmentsContainer.forEach { view ->
+            (view as AttachmentView).clear()
+        }
+    }
+
     companion object {
         fun create(parent: ViewGroup, viewType: Int,
                    adapter: MessagesAdapter,
@@ -162,5 +169,10 @@ class TheirMessageViewHolder(view: View, adapter: MessagesAdapter,
                 .placeholder(R.drawable.bg_gray_solid_circle)
                 .circleCrop()
                 .into(avatarImg)
+    }
+
+    override fun clear() {
+        super.clear()
+        avatarImg.setImageDrawable(null)
     }
 }
