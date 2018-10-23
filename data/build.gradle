@@ -1,0 +1,60 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    def root = rootProject.ext
+
+    compileSdkVersion root.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion root.minSdkVersion
+        targetSdkVersion root.targetSdkVersion
+        versionCode root.versionCode
+        versionName root.versionName
+    }
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    def core = rootProject.ext.core
+    def archComponents = rootProject.ext.architectureComponents
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // -------------------------------------- MODULE -----------------------------------------------
+    implementation project(':domain')
+
+    // -------------------------------------- CORE -------------------------------------------------
+    implementation core.kotlin
+    implementation core.rxKotlin
+    implementation core.ktxCore
+    // dagger
+    implementation core.dagger
+    kapt core.daggerCompiler
+
+    // -------------------------------------- ARCHITECTURE COMPONENTS ------------------------------
+    // room
+    implementation archComponents.room
+    implementation archComponents.roomRxJava
+    kapt archComponents.roomCompiler
+    // paging
+    implementation archComponents.paging
+    implementation archComponents.pagingRxJava
+    // work manager
+    implementation archComponents.workManager
+
+    // -------------------------------------- DEVELOPMENT ------------------------------------------
+    implementation development.gson
+}

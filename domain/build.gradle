@@ -1,0 +1,21 @@
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+
+dependencies {
+    def core = rootProject.ext.core
+    def archComponents = rootProject.ext.architectureComponents
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // -------------------------------------- CORE -------------------------------------------------
+    implementation core.kotlin
+    implementation core.rxKotlin
+
+    // -------------------------------------- ARCHITECTURE COMPONENTS ------------------------------
+    // paging
+    implementation archComponents.paging
+    implementation archComponents.pagingRxJava
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8

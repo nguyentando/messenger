@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/blue</color>
+    <color name="colorPrimaryDark">@color/blue_dark</color>
+    <color name="colorAccent">@color/pink_dark</color>
+
+    <color name="blue_light">#443F82EF</color>
+    <color name="blue">#3F82EF</color>
+    <color name="blue_dark">#2B6DD9</color>
+
+    <color name="pink_dark">#D81B60</color>
+
+    <color name="gray_light">#EAEAEA</color>
+    <color name="gray">#A5A5A5</color>
+    <color name="gray_dark">#6D6D6D</color>
+</resources>

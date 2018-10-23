@@ -1,0 +1,80 @@
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+ext {
+    // sdk and tools
+    minSdkVersion = 21
+    targetSdkVersion = 28
+    compileSdkVersion = 28
+    buildToolsVersion = '28.0.2'
+    versionCode = 1
+    versionName = "1.0"
+
+    // core
+    rxKotlinVersion = '2.3.0'
+    rxAndroidVersion = '2.1.0'
+    ktxVersion = '1.0.0'
+    daggerVersion = '2.18'
+
+    // architecture components
+    archVersion = '2.0.0-rc01'
+    roomVersion = '2.1.0-alpha01'
+    workManagerVersion = '1.0.0-alpha10'
+
+    // support libraries
+    supportLibraryVersion = '1.0.0'
+
+    // development
+    gsonVersion = '2.8.5'
+    glideVersion = '4.8.0'
+
+    core = [
+            kotlin        : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion",
+            rxKotlin      : "io.reactivex.rxjava2:rxkotlin:$rxKotlinVersion",
+            rxAndroid     : "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion",
+
+            // ktx
+            ktxCore       : "androidx.core:core-ktx:$ktxVersion",
+
+            // dagger
+            dagger        : "com.google.dagger:dagger:$daggerVersion",
+            daggerCompiler: "com.google.dagger:dagger-compiler:$daggerVersion"
+    ]
+
+    architectureComponents = [
+            // room
+            room               : "androidx.room:room-runtime:$roomVersion",
+            roomRxJava         : "androidx.room:room-rxjava2:$roomVersion",
+            roomCompiler       : "androidx.room:room-compiler:$roomVersion",
+
+            // paging
+            paging             : "androidx.paging:paging-runtime:$archVersion",
+            pagingRxJava       : "androidx.paging:paging-rxjava2:$archVersion",
+
+            // lifecycle
+            lifecycle          : "androidx.lifecycle:lifecycle-extensions:$archVersion",
+            lifecycleCommonJava: "androidx.lifecycle:lifecycle-common-java8:$archVersion",
+            lifecycleTestHelper: "androidx.arch.core:core-testing:$archVersion",
+
+            // work manager
+            workManager        : "android.arch.work:work-runtime-ktx:$workManagerVersion"
+    ]
+
+    supportLibraries = [
+            appCompat            : "androidx.appcompat:appcompat:$supportLibraryVersion",
+            recyclerView         : "androidx.recyclerview:recyclerview:$supportLibraryVersion",
+            recyclerViewSelection: "androidx.recyclerview:recyclerview-selection:$supportLibraryVersion"
+    ]
+
+    development = [
+            gson         : "com.google.code.gson:gson:$gsonVersion",
+
+            // glide
+            glide        : "com.github.bumptech.glide:glide:$glideVersion",
+            glideCompiler: "com.github.bumptech.glide:compiler:$glideVersion"
+    ]
+}

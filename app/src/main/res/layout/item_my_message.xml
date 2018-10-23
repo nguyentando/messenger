@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MessageItem"
+    android:orientation="vertical">
+
+    <!-- TODO - auto shrink the width of the message bubble when the message content is short -->
+    <!-- TODO - from the 2nd line of text, they should be left aligned with the 1st line -->
+    <TextView
+        android:id="@+id/content_txt"
+        style="@style/MessageContent"
+        android:layout_gravity="end"
+        android:layout_marginStart="@dimen/my_message_margin_start"
+        android:background="@drawable/bg_gray_solid_corner"
+        android:gravity="end" />
+
+    <!-- TODO - add AttachmentViews directly into the root view
+    Drawback: the code will be messier, and it might change in the future,
+    because when the message view become more complex, we have to change the root view -->
+    <LinearLayout
+        android:id="@+id/attachments_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginStart="@dimen/my_message_margin_start"
+        android:orientation="vertical" />
+
+</LinearLayout>

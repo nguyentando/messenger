@@ -1,0 +1,78 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    def root = rootProject.ext
+
+    compileSdkVersion root.compileSdkVersion
+
+    defaultConfig {
+        applicationId "com.donguyen.messenger"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    androidExtensions {
+        experimental = true
+    }
+}
+
+dependencies {
+    def core = rootProject.ext.core
+    def archComponents = rootProject.ext.architectureComponents
+    def support = rootProject.ext.supportLibraries
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // -------------------------------------- MODULE -----------------------------------------------
+    implementation project(':domain')
+    implementation project(':data')
+
+    // -------------------------------------- CORE -------------------------------------------------
+    implementation core.kotlin
+    implementation core.rxKotlin
+    implementation core.rxAndroid
+    implementation core.ktxCore
+    // dagger
+    implementation core.dagger
+    kapt core.daggerCompiler
+
+    // -------------------------------------- ARCHITECTURE COMPONENTS ------------------------------
+    // room
+    implementation archComponents.room
+    implementation archComponents.roomRxJava
+    kapt archComponents.roomCompiler
+    // paging
+    implementation archComponents.paging
+    implementation archComponents.pagingRxJava
+    // lifecycle
+    implementation archComponents.lifecycle
+    implementation archComponents.lifecycleCommonJava
+    testImplementation archComponents.lifecycleTestHelper
+
+    // -------------------------------------- SUPPORT LIBRARIES ------------------------------------
+    implementation support.appCompat
+    implementation support.recyclerView
+    implementation support.recyclerViewSelection
+
+    // -------------------------------------- DEVELOPMENT ------------------------------------------
+    // glide
+    implementation development.glide
+    kapt development.glideCompiler
+}
