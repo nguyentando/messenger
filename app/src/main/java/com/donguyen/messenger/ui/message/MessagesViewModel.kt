@@ -6,6 +6,8 @@ import androidx.paging.PagedList
 import com.donguyen.domain.model.Message
 import com.donguyen.domain.usecase.Failure
 import com.donguyen.domain.usecase.Success
+import com.donguyen.domain.usecase.message.DeleteMessagesUseCase
+import com.donguyen.domain.usecase.message.DeleteMessagesUseCase.Input
 import com.donguyen.domain.usecase.message.GetMessagesUseCase
 import com.donguyen.domain.util.None
 import com.donguyen.messenger.base.BaseViewModel
@@ -13,7 +15,9 @@ import com.donguyen.messenger.base.BaseViewModel
 /**
  * Created by DoNguyen on 23/10/18.
  */
-class MessagesViewModel(private val getMessagesUseCase: GetMessagesUseCase) : BaseViewModel() {
+class MessagesViewModel(private val getMessagesUseCase: GetMessagesUseCase,
+                        private val deleteMessagesUseCase: DeleteMessagesUseCase)
+    : BaseViewModel() {
 
     private val mViewState: MutableLiveData<MessagesViewState> = MutableLiveData()
     val viewState: LiveData<MessagesViewState> = mViewState
@@ -47,5 +51,18 @@ class MessagesViewModel(private val getMessagesUseCase: GetMessagesUseCase) : Ba
                 loading = false,
                 error = error
         )
+    }
+
+    fun deleteMessages(messageIds: Iterable<Long>) {
+        deleteMessagesUseCase.execute(Input(messageIds))
+                .subscribe {
+                    when (it) {
+                        is Success -> {
+                            // the database will automatically notify about the changed to the UI
+                        }
+                        is Failure -> handleFailure(it.error)
+                    }
+                }
+                .autoClear()
     }
 }

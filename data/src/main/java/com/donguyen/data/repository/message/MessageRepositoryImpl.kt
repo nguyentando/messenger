@@ -4,7 +4,6 @@ import androidx.paging.PagedList
 import androidx.paging.RxPagedListBuilder
 import com.donguyen.data.db.AppDatabase
 import com.donguyen.data.db.dao.MessageDao
-import com.donguyen.data.model.MessageData
 import com.donguyen.data.model.MessageWithAttachments
 import com.donguyen.domain.model.Message
 import com.donguyen.domain.repository.MessageRepository
@@ -18,8 +17,7 @@ import io.reactivex.Observable
 class MessageRepositoryImpl(
         // can create a MessageDataSource interface when having multiple data sources
         private val messageDao: MessageDao,
-        private val messageWithAttachmentsToMessageMapper: Mapper<MessageWithAttachments, Message>,
-        private val messageToMessageDataMapper: Mapper<Message, MessageData>
+        private val messageWithAttachmentsToMessageMapper: Mapper<MessageWithAttachments, Message>
 ) : MessageRepository {
 
     override fun getMessages(): Observable<Result<PagedList<Message>>> {
@@ -40,9 +38,10 @@ class MessageRepositoryImpl(
                 }
     }
 
-    override fun deleteMessages(messages: List<Message>): Observable<Result<Boolean>> {
+    override fun deleteMessages(messageIds: Iterable<Long>): Observable<Result<Boolean>> {
+        val ids = messageIds.toList() // have to convert to list, because Room not support Iterable
         return Observable.fromCallable {
-            messageDao.deleteItems(messageToMessageDataMapper.mapFromList(messages))
+            messageDao.deleteMessages(ids)
             Result.success(true)
         }
     }

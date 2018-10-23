@@ -8,17 +8,19 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.widget.RecyclerView
 import com.donguyen.domain.model.Message
 import com.donguyen.messenger.R
 import com.donguyen.messenger.ui.customview.AttachmentView
+import com.donguyen.messenger.ui.message.selection.MessageItemDetails
 import com.donguyen.messenger.util.GlideApp
 
 
 /**
  * Created by DoNguyen on 23/10/18.
  */
-abstract class MessageViewHolder(view: View)
+abstract class MessageViewHolder(view: View, private val adapter: MessagesAdapter)
     : RecyclerView.ViewHolder(view) {
 
     protected val nameTxt: TextView = view.findViewById(R.id.name_txt)
@@ -27,7 +29,8 @@ abstract class MessageViewHolder(view: View)
 
     private val marginTop = view.context.resources.getDimensionPixelSize(R.dimen.margin_normal)
 
-    open fun bind(message: Message, position: Int) {
+    open fun bind(message: Message, position: Int, isActivated: Boolean) {
+        itemView.isActivated = isActivated
         // TODO - check again on how to handle special characters
         contentTxt.text = message.content.replace("\n", "", true)
 
@@ -49,33 +52,37 @@ abstract class MessageViewHolder(view: View)
         // TODO - save the attachment image ratio into the database to use later
     }
 
+    fun getMessageItemDetails(): ItemDetailsLookup.ItemDetails<Long> {
+        return MessageItemDetails(adapterPosition, adapter.getMessage(adapterPosition)!!)
+    }
+
     companion object {
-        fun create(parent: ViewGroup, viewType: Int): MessageViewHolder {
+        fun create(parent: ViewGroup, viewType: Int, adapter: MessagesAdapter): MessageViewHolder {
             val view = LayoutInflater.from(parent.context)
                     .inflate(viewType, parent, false)
 
             return when (viewType) {
-                R.layout.item_my_message -> MyMessageViewHolder(view)
-                else -> TheirMessageViewHolder(view)
+                R.layout.item_my_message -> MyMessageViewHolder(view, adapter)
+                else -> TheirMessageViewHolder(view, adapter)
             }
         }
     }
 }
 
-class MyMessageViewHolder(view: View) : MessageViewHolder(view) {
+class MyMessageViewHolder(view: View, adapter: MessagesAdapter) : MessageViewHolder(view, adapter) {
 
-    override fun bind(message: Message, position: Int) {
-        super.bind(message, position)
+    override fun bind(message: Message, position: Int, isActivated: Boolean) {
+        super.bind(message, position, isActivated)
         nameTxt.setText(R.string.me)
     }
 }
 
-class TheirMessageViewHolder(view: View) : MessageViewHolder(view) {
+class TheirMessageViewHolder(view: View, adapter: MessagesAdapter) : MessageViewHolder(view, adapter) {
 
     private val avatarImg: ImageView = view.findViewById(R.id.avatar_img)
 
-    override fun bind(message: Message, position: Int) {
-        super.bind(message, position)
+    override fun bind(message: Message, position: Int, isActivated: Boolean) {
+        super.bind(message, position, isActivated)
         nameTxt.text = message.user.name
         GlideApp.with(avatarImg.context)
                 .load(message.user.avatarUrl)

@@ -2,7 +2,9 @@ package com.donguyen.messenger.ui.message
 
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
+import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.donguyen.domain.model.Message
 import com.donguyen.messenger.R
 
@@ -16,9 +18,22 @@ import com.donguyen.messenger.R
  */
 class MessagesAdapter : PagedListAdapter<Message, MessageViewHolder>(COMPARATOR) {
 
+    var selectionTracker: SelectionTracker<Long>? = null
+
     override fun getItemId(position: Int): Long {
         // getItem will not be null, because we don't support placeholder
         return getItem(position)!!.id
+    }
+
+    fun getMessage(position: Int): Message? {
+        return super.getItem(position)
+    }
+
+    fun getAdapterPosition(messageId: Long): Int {
+        currentList?.forEachIndexed { position, message ->
+            if (message.id == messageId) return position
+        }
+        return RecyclerView.NO_POSITION
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -30,13 +45,14 @@ class MessagesAdapter : PagedListAdapter<Message, MessageViewHolder>(COMPARATOR)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
-        return MessageViewHolder.create(parent, viewType)
+        return MessageViewHolder.create(parent, viewType, this)
     }
 
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
         // message is only null when we enabled placeholder in the recycler view
         val message = getItem(position) ?: return
-        holder.bind(message, position)
+        val isSelected = selectionTracker?.isSelected(message.id) ?: false
+        holder.bind(message, position, isSelected)
     }
 
     companion object {

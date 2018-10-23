@@ -12,5 +12,5 @@ interface MessageRepository {
 
     fun getMessages(): Observable<Result<PagedList<Message>>>
 
-    fun deleteMessages(messages: List<Message>): Observable<Result<Boolean>>
+    fun deleteMessages(messageIds: Iterable<Long>): Observable<Result<Boolean>>
 }

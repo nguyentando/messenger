@@ -7,7 +7,6 @@ import com.donguyen.data.db.dao.MessageDao
 import com.donguyen.data.db.dao.UserDao
 import com.donguyen.data.repository.attachment.AttachmentRepositoryImpl
 import com.donguyen.data.repository.message.MessageRepositoryImpl
-import com.donguyen.data.repository.message.MessageToMessageDataMapper
 import com.donguyen.data.repository.message.MessageWithAttachmentsToMessageMapper
 import com.donguyen.data.repository.user.UserDataToUserMapper
 import com.donguyen.data.repository.user.UserRepositoryImpl
@@ -62,14 +61,12 @@ class DataModule {
     @Singleton
     fun provideMessageRepository(
             messageDao: MessageDao,
-            messageWithAttachmentsToMessageMapper: MessageWithAttachmentsToMessageMapper,
-            messageToMessageDataMapper: MessageToMessageDataMapper
+            messageWithAttachmentsToMessageMapper: MessageWithAttachmentsToMessageMapper
     ): MessageRepository {
 
         return MessageRepositoryImpl(
                 messageDao,
-                messageWithAttachmentsToMessageMapper,
-                messageToMessageDataMapper)
+                messageWithAttachmentsToMessageMapper)
     }
 
     @Provides

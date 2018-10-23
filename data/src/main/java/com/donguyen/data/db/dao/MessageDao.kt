@@ -28,4 +28,7 @@ interface MessageDao : BaseDao<MessageData> {
     )
     // TODO - check if the PositionalDataSource works well in this case
     fun getAllMessagesWithAttachments(): DataSource.Factory<Int, MessageWithAttachments>
+
+    @Query("DELETE FROM messages WHERE id in (:messageIds)")
+    fun deleteMessages(messageIds: List<Long>)
 }

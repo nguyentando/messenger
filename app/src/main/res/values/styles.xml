@@ -13,6 +13,7 @@
         <item name="android:paddingStart">@dimen/margin_normal</item>
         <item name="android:paddingEnd">@dimen/margin_normal</item>
         <item name="android:paddingBottom">@dimen/margin_tiny</item>
+        <item name="android:background">@drawable/bg_message_item</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>

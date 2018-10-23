@@ -68,6 +68,8 @@ dependencies {
 
     // -------------------------------------- SUPPORT LIBRARIES ------------------------------------
     implementation support.appCompat
+    implementation support.recyclerView
+    implementation support.recyclerViewSelection
 
     // -------------------------------------- DEVELOPMENT ------------------------------------------
     // glide
