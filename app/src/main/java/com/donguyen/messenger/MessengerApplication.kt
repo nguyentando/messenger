@@ -30,4 +30,8 @@ class MessengerApplication : Application() {
     fun getBaseComponent(): BaseComponent {
         return baseComponent
     }
+
+    fun createMessagesComponent(): MessagesSubComponent {
+        return baseComponent.plus(MessagesModule())
+    }
 }

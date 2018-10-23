@@ -2,6 +2,7 @@ package com.donguyen.messenger.di.component
 
 import com.donguyen.messenger.di.module.AppModule
 import com.donguyen.messenger.di.module.DataModule
+import com.donguyen.messenger.di.module.MessagesModule
 import dagger.Component
 import javax.inject.Singleton
 
@@ -15,4 +16,7 @@ import javax.inject.Singleton
             DataModule::class
         ]
 )
-interface BaseComponent
+interface BaseComponent {
+
+    fun plus(messagesModule: MessagesModule): MessagesSubComponent
+}

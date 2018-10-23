@@ -19,5 +19,5 @@ class MessageWithAttachments {
             parentColumn = "id",
             entityColumn = "message_id"
     )
-    var attachments: List<AttachmentData> = ArrayList()
+    var attachments: List<AttachmentData> = listOf()
 }
