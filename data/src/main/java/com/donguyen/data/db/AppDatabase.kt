@@ -4,6 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import com.donguyen.data.SeedDatabaseWorker
 import com.donguyen.data.db.dao.AttachmentDao
 import com.donguyen.data.db.dao.MessageDao
 import com.donguyen.data.db.dao.UserDao
@@ -41,6 +45,17 @@ abstract class AppDatabase : RoomDatabase() {
         // create and pre-populate the database
         private fun buildDatabase(context: Context): AppDatabase {
             return Room.databaseBuilder(context, AppDatabase::class.java, "messenger-db")
+                    .addCallback(object : Callback() {
+                        override fun onCreate(db: SupportSQLiteDatabase) {
+                            super.onCreate(db)
+
+                            // after the first run
+                            // if the user cleared app data (by going to Settings/Apps)
+                            // the database will be recreated and pre-populate data again
+                            val request = OneTimeWorkRequestBuilder<SeedDatabaseWorker>().build()
+                            WorkManager.getInstance().enqueue(request)
+                        }
+                    })
                     .build()
         }
     }

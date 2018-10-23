@@ -49,6 +49,11 @@ dependencies {
     implementation archComponents.room
     implementation archComponents.roomRxJava
     kapt archComponents.roomCompiler
+    // paging
+    implementation archComponents.paging
+    implementation archComponents.pagingRxJava
+    // work manager
+    implementation archComponents.workManager
 
     // -------------------------------------- DEVELOPMENT ------------------------------------------
     implementation development.gson

@@ -23,6 +23,7 @@ ext {
     // architecture components
     archVersion = '2.0.0-rc01'
     roomVersion = '2.1.0-alpha01'
+    workManagerVersion = '1.0.0-alpha10'
 
     // support libraries
     supportLibraryVersion = '1.0.0'
@@ -57,6 +58,9 @@ ext {
             lifecycle          : "androidx.lifecycle:lifecycle-extensions:$archVersion",
             lifecycleCommonJava: "androidx.lifecycle:lifecycle-common-java8:$archVersion",
             lifecycleTestHelper: "androidx.arch.core:core-testing:$archVersion",
+
+            // work manager
+            workManager        : "android.arch.work:work-runtime-ktx:$workManagerVersion"
     ]
 
     supportLibraries = [
