@@ -21,4 +21,11 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun messageDao(): MessageDao
     abstract fun attachmentDao(): AttachmentDao
     abstract fun userDao(): UserDao
+
+    companion object {
+        // these variables can change based on network condition
+        var PAGE_SIZE = 20
+        var PREFETCH_DISTANCE = 2 * PAGE_SIZE
+        var INITIAL_LOAD_SIZE = 2 * PAGE_SIZE
+    }
 }
