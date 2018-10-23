@@ -51,14 +51,19 @@ ext {
 
             // paging
             paging             : "androidx.paging:paging-runtime:$archVersion",
-            pagingRxJava       : "androidx.paging:paging-rxjava2:$archVersion"
+            pagingRxJava       : "androidx.paging:paging-rxjava2:$archVersion",
+
+            // lifecycle
+            lifecycle          : "androidx.lifecycle:lifecycle-extensions:$archVersion",
+            lifecycleCommonJava: "androidx.lifecycle:lifecycle-common-java8:$archVersion",
+            lifecycleTestHelper: "androidx.arch.core:core-testing:$archVersion",
     ]
 
     supportLibraries = [
-            appCompat            : "androidx.appcompat:appcompat:$supportLibraryVersion"
+            appCompat: "androidx.appcompat:appcompat:$supportLibraryVersion"
     ]
 
     development = [
-            gson         : "com.google.code.gson:gson:$gsonVersion"
+            gson: "com.google.code.gson:gson:$gsonVersion"
     ]
 }

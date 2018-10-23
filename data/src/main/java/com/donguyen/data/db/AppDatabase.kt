@@ -1,6 +1,8 @@
 package com.donguyen.data.db
 
+import android.content.Context
 import androidx.room.Database
+import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.donguyen.data.db.dao.AttachmentDao
 import com.donguyen.data.db.dao.MessageDao
@@ -27,5 +29,19 @@ abstract class AppDatabase : RoomDatabase() {
         var PAGE_SIZE = 20
         var PREFETCH_DISTANCE = 2 * PAGE_SIZE
         var INITIAL_LOAD_SIZE = 2 * PAGE_SIZE
+
+        @Volatile
+        private var instance: AppDatabase? = null
+
+        @Synchronized
+        fun getInstance(context: Context): AppDatabase {
+            return instance ?: buildDatabase(context).also { instance = it }
+        }
+
+        // create and pre-populate the database
+        private fun buildDatabase(context: Context): AppDatabase {
+            return Room.databaseBuilder(context, AppDatabase::class.java, "messenger-db")
+                    .build()
+        }
     }
 }

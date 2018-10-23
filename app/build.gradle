@@ -35,6 +35,7 @@ android {
 
 dependencies {
     def core = rootProject.ext.core
+    def archComponents = rootProject.ext.architectureComponents
     def support = rootProject.ext.supportLibraries
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -48,6 +49,22 @@ dependencies {
     implementation core.rxKotlin
     implementation core.rxAndroid
     implementation core.ktxCore
+    // dagger
+    implementation core.dagger
+    kapt core.daggerCompiler
+
+    // -------------------------------------- ARCHITECTURE COMPONENTS --------------------------------------------------
+    // room
+    implementation archComponents.room
+    implementation archComponents.roomRxJava
+    kapt archComponents.roomCompiler
+    // paging
+    implementation archComponents.paging
+    implementation archComponents.pagingRxJava
+    // lifecycle
+    implementation archComponents.lifecycle
+    implementation archComponents.lifecycleCommonJava
+    testImplementation archComponents.lifecycleTestHelper
 
     // -------------------------------------- SUPPORT LIBRARIES ------------------------------------
     implementation support.appCompat
