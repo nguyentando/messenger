@@ -1,10 +1,9 @@
 package com.donguyen.messenger.ui.message
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -17,6 +16,7 @@ import com.donguyen.messenger.R
 import com.donguyen.messenger.ui.customview.AttachmentView
 import com.donguyen.messenger.ui.message.selection.MessageItemDetails
 import com.donguyen.messenger.util.GlideApp
+import java.util.*
 
 
 /**
@@ -31,21 +31,44 @@ abstract class MessageViewHolder(view: View,
     private val contentTxt: TextView = view.findViewById(R.id.content_txt)
     private val attachmentsContainer: LinearLayout = view.findViewById(R.id.attachments_container)
 
-    private val marginTop = view.context.resources.getDimensionPixelSize(R.dimen.margin_normal)
     private val menuItems = arrayOf<CharSequence>(view.context.getString(R.string.delete_attachment))
+
+    private val attachmentViewPool = AttachmentViewPool(view.context)
 
     open fun bind(message: Message, position: Int, isActivated: Boolean) {
         itemView.isActivated = isActivated
         // TODO - check again on how to handle special characters
         contentTxt.text = message.content.replace("\n", "", true)
 
-        // TODO - write a ViewPool to reuse AttachmentView instances
-        // remove all attachment views
-        attachmentsContainer.removeAllViews()
+        // create enough AttachmentView in the container
+        val viewCount = attachmentsContainer.childCount
+        val attachmentCount = message.attachments.size
+        var different = Math.abs(viewCount - attachmentCount)
+        when {
+            viewCount > attachmentCount -> {
+                // cache AttachmentView(s) into the pool
+                while (different > 0) {
+                    val attachmentView = attachmentsContainer.getChildAt(0) as AttachmentView
+                    attachmentsContainer.removeViewAt(0)
+                    attachmentViewPool.add(attachmentView)
+                    different--
+                }
+            }
 
-        // create new attachment views
-        for (attachment in message.attachments) {
-            val attachmentView = AttachmentView(attachmentsContainer.context).apply {
+            viewCount < attachmentCount -> {
+                // reuse AttachmentView(s) from the pool
+                while (different > 0) {
+                    val attachmentView = attachmentViewPool.getAttachmentView(itemView.context)
+                    attachmentsContainer.addView(attachmentView)
+                    different--
+                }
+            }
+        }
+
+        // bind attachment data into AttachmentView
+        for ((index, attachment) in message.attachments.withIndex()) {
+            val attachmentView = attachmentsContainer.getChildAt(index) as AttachmentView
+            attachmentView.apply {
                 updateAttachment(attachment)
                 setOnLongClickListener {
                     AlertDialog.Builder(context)
@@ -56,10 +79,6 @@ abstract class MessageViewHolder(view: View,
                     true
                 }
             }
-            val params = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT).apply {
-                topMargin = marginTop
-            }
-            attachmentsContainer.addView(attachmentView, params)
         }
 
         // TODO - save the attachment image ratio into the database to use later
@@ -79,6 +98,27 @@ abstract class MessageViewHolder(view: View,
             return when (viewType) {
                 R.layout.item_my_message -> MyMessageViewHolder(view, adapter, listener)
                 else -> TheirMessageViewHolder(view, adapter, listener)
+            }
+        }
+    }
+
+    /**
+     * A shared pool of AttachmentView. Use it when display attachments to improve performance.
+     */
+    private class AttachmentViewPool(context: Context) : Stack<AttachmentView>() {
+
+        private val marginTop = context.resources.getDimensionPixelSize(R.dimen.margin_normal)
+
+        fun getAttachmentView(context: Context): AttachmentView {
+            return when {
+                size > 0 -> pop()
+                else -> AttachmentView(context).apply {
+                    layoutParams = LinearLayout.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+                        topMargin = marginTop
+                    }
+                }
             }
         }
     }
