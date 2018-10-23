@@ -21,9 +21,13 @@ ext {
 
     // architecture components
     archVersion = '2.0.0-rc01'
+    roomVersion = '2.1.0-alpha01'
 
     // support libraries
     supportLibraryVersion = '1.0.0'
+
+    // development
+    gsonVersion = '2.8.5'
 
     core = [
             kotlin        : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion",
@@ -35,6 +39,11 @@ ext {
     ]
 
     architectureComponents = [
+            // room
+            room               : "androidx.room:room-runtime:$roomVersion",
+            roomRxJava         : "androidx.room:room-rxjava2:$roomVersion",
+            roomCompiler       : "androidx.room:room-compiler:$roomVersion",
+
             // paging
             paging             : "androidx.paging:paging-runtime:$archVersion",
             pagingRxJava       : "androidx.paging:paging-rxjava2:$archVersion"
@@ -42,5 +51,9 @@ ext {
 
     supportLibraries = [
             appCompat            : "androidx.appcompat:appcompat:$supportLibraryVersion"
+    ]
+
+    development = [
+            gson         : "com.google.code.gson:gson:$gsonVersion"
     ]
 }

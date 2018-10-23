@@ -47,7 +47,6 @@ dependencies {
     implementation core.kotlin
     implementation core.rxKotlin
     implementation core.rxAndroid
-    // ktx
     implementation core.ktxCore
 
     // -------------------------------------- SUPPORT LIBRARIES ------------------------------------

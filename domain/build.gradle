@@ -11,7 +11,7 @@ dependencies {
     implementation core.kotlin
     implementation core.rxKotlin
 
-    // -------------------------------------- ARCHITECTURE COMPONENTS --------------------------------------------------
+    // -------------------------------------- ARCHITECTURE COMPONENTS ------------------------------
     // paging
     implementation archComponents.paging
     implementation archComponents.pagingRxJava
