@@ -39,6 +39,9 @@ dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    // -------------------------------------- MODULE -----------------------------------------------
+    implementation project(':domain')
+
     // -------------------------------------- CORE -------------------------------------------------
     implementation core.kotlin
     implementation core.rxKotlin
