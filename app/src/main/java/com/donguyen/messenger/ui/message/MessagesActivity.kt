@@ -3,6 +3,7 @@ package com.donguyen.messenger.ui.message
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.lifecycle.Observer
@@ -10,7 +11,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.donguyen.domain.model.Attachment
 import com.donguyen.messenger.R
 import com.donguyen.messenger.ui.message.selection.MessageItemDetailsLookup
 import com.donguyen.messenger.ui.message.selection.MessageItemKeyProvider
@@ -23,7 +23,7 @@ import javax.inject.Inject
 /**
  * Created by DoNguyen on 23/10/18.
  */
-class MessagesActivity : AppCompatActivity(), MessageViewHolder.OnDeleteAttachmentListener {
+class MessagesActivity : AppCompatActivity(), MessageViewHolder.OnAttachmentViewListener {
 
     @Inject
     lateinit var factory: MessagesVMFactory
@@ -32,6 +32,9 @@ class MessagesActivity : AppCompatActivity(), MessageViewHolder.OnDeleteAttachme
     private lateinit var messagesAdapter: MessagesAdapter
     private lateinit var selectionTracker: SelectionTracker<Long>
     private var actionMode: ActionMode? = null
+
+    // for handle deleting an attachment
+    private var selectedAttachmentId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +59,11 @@ class MessagesActivity : AppCompatActivity(), MessageViewHolder.OnDeleteAttachme
                 // No matter what case it is, we need to reload data
                 viewModel.loadMessages()
             }
+
+            selectedAttachmentId = savedInstanceState.getString(ATTACHMENT_ID)
+            if (selectedAttachmentId != null) {
+                showAttachmentMenu(selectedAttachmentId!!)
+            }
         } else {
             viewModel.loadMessages()
         }
@@ -64,6 +72,7 @@ class MessagesActivity : AppCompatActivity(), MessageViewHolder.OnDeleteAttachme
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         selectionTracker.onSaveInstanceState(outState)
+        outState.putString(ATTACHMENT_ID, selectedAttachmentId)
     }
 
     private fun initViews() {
@@ -147,8 +156,13 @@ class MessagesActivity : AppCompatActivity(), MessageViewHolder.OnDeleteAttachme
     private val actionModeController = object : ActionMode.Callback {
 
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
-            mode.menuInflater.inflate(R.menu.menu_contextual_action_message, menu)
-            return true
+            return when (selectedAttachmentId) {
+                null -> {
+                    mode.menuInflater.inflate(R.menu.menu_contextual_action_message, menu)
+                    true
+                }
+                else -> false
+            }
         }
 
         override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
@@ -167,9 +181,13 @@ class MessagesActivity : AppCompatActivity(), MessageViewHolder.OnDeleteAttachme
         }
 
         override fun onDestroyActionMode(mode: ActionMode) {
-            selectionTracker.clearSelection()
-            actionMode = null
+            clearSelection()
         }
+    }
+
+    private fun clearSelection() {
+        selectionTracker.clearSelection()
+        actionMode = null
     }
 
     private fun deleteMessages(messageIds: Iterable<Long>) {
@@ -180,7 +198,32 @@ class MessagesActivity : AppCompatActivity(), MessageViewHolder.OnDeleteAttachme
     // HANDLE DELETING AN ATTACHMENT
     // ------------------------------------------------------------------------------------------ //
 
-    override fun onDeleteAttachment(attachment: Attachment) {
-        viewModel.deleteAttachment(attachment.id)
+    override fun onAttachmentLongClicked(attachmentId: String) {
+        showAttachmentMenu(attachmentId)
+    }
+
+    private fun showAttachmentMenu(attachmentId: String) {
+        this.selectedAttachmentId = attachmentId
+        messagesAdapter.isEnableSelection = false
+        clearSelection()
+
+        val menuItems = arrayOf<CharSequence>(getString(R.string.delete_attachment))
+        AlertDialog.Builder(this)
+                .setItems(menuItems) { _, _ ->
+                    viewModel.deleteAttachment(attachmentId)
+                }.setOnDismissListener {
+                    onAttachmentMenuDismissed()
+                }
+                .show()
+    }
+
+    private fun onAttachmentMenuDismissed() {
+        selectedAttachmentId = null
+        messagesAdapter.isEnableSelection = true
+        clearSelection()
+    }
+
+    companion object {
+        private const val ATTACHMENT_ID = "attachment_id"
     }
 }

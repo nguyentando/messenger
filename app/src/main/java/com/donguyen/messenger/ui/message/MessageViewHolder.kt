@@ -11,11 +11,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.forEach
 import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.widget.RecyclerView
-import com.donguyen.domain.model.Attachment
 import com.donguyen.domain.model.Message
 import com.donguyen.messenger.R
 import com.donguyen.messenger.ui.customview.AttachmentView
@@ -29,14 +27,12 @@ import java.util.*
  */
 abstract class MessageViewHolder(view: View,
                                  private val adapter: MessagesAdapter,
-                                 var listener: OnDeleteAttachmentListener? = null)
+                                 var listener: OnAttachmentViewListener? = null)
     : RecyclerView.ViewHolder(view) {
 
     private val contentTxt: TextView = view.findViewById(R.id.content_txt)
     private val attachmentsContainer: LinearLayout = view.findViewById(R.id.attachments_container)
-
     private val meString = view.context.getString(R.string.me)
-    private val menuItems = arrayOf<CharSequence>(view.context.getString(R.string.delete_attachment))
 
     private val attachmentViewPool = AttachmentViewPool(view.context)
 
@@ -88,12 +84,7 @@ abstract class MessageViewHolder(view: View,
             attachmentView.apply {
                 updateAttachment(attachment)
                 setOnLongClickListener {
-                    // TODO - prevent recycler view from listening to this event and turn on selection mode
-                    AlertDialog.Builder(context)
-                            .setItems(menuItems) { _, _ ->
-                                listener?.onDeleteAttachment(attachment)
-                            }
-                            .show()
+                    listener?.onAttachmentLongClicked(attachment.id)
                     true
                 }
             }
@@ -115,7 +106,7 @@ abstract class MessageViewHolder(view: View,
     companion object {
         fun create(parent: ViewGroup, viewType: Int,
                    adapter: MessagesAdapter,
-                   listener: OnDeleteAttachmentListener? = null): MessageViewHolder {
+                   listener: OnAttachmentViewListener? = null): MessageViewHolder {
             val view = LayoutInflater.from(parent.context)
                     .inflate(viewType, parent, false)
 
@@ -147,17 +138,17 @@ abstract class MessageViewHolder(view: View,
         }
     }
 
-    interface OnDeleteAttachmentListener {
-        fun onDeleteAttachment(attachment: Attachment)
+    interface OnAttachmentViewListener {
+        fun onAttachmentLongClicked(attachmentId: String)
     }
 }
 
 class MyMessageViewHolder(view: View, adapter: MessagesAdapter,
-                          listener: OnDeleteAttachmentListener? = null)
+                          listener: OnAttachmentViewListener? = null)
     : MessageViewHolder(view, adapter, listener)
 
 class TheirMessageViewHolder(view: View, adapter: MessagesAdapter,
-                             listener: OnDeleteAttachmentListener? = null)
+                             listener: OnAttachmentViewListener? = null)
     : MessageViewHolder(view, adapter, listener) {
 
     private val avatarImg: ImageView = view.findViewById(R.id.avatar_img)

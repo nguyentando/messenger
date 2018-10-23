@@ -16,10 +16,11 @@ import com.donguyen.messenger.R
  *
  * Created by DoNguyen on 23/10/18.
  */
-class MessagesAdapter(var listener: MessageViewHolder.OnDeleteAttachmentListener? = null)
+class MessagesAdapter(var listener: MessageViewHolder.OnAttachmentViewListener? = null)
     : PagedListAdapter<Message, MessageViewHolder>(COMPARATOR) {
 
     var selectionTracker: SelectionTracker<Long>? = null
+    var isEnableSelection = true
 
     override fun getItemId(position: Int): Long {
         // getItem will not be null, because we don't support placeholder
@@ -52,7 +53,7 @@ class MessagesAdapter(var listener: MessageViewHolder.OnDeleteAttachmentListener
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
         // message is only null when we enabled placeholder in the recycler view
         val message = getItem(position) ?: return
-        val isSelected = selectionTracker?.isSelected(message.id) ?: false
+        val isSelected = isEnableSelection && selectionTracker?.isSelected(message.id) ?: false
         holder.bind(message, position, isSelected)
     }
 
