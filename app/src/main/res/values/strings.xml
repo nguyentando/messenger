@@ -3,4 +3,6 @@
     <string name="me">Me</string>
     <string name="delete">Delete</string>
     <string name="delete_attachment">Delete attachment</string>
+    <string name="message_format">%1$s\n\n%2$s</string>
+    <string name="user_avatar">User avatar</string>
 </resources>

@@ -6,35 +6,27 @@
         android:id="@+id/avatar_img"
         android:layout_width="@dimen/img_size_small"
         android:layout_height="@dimen/img_size_small"
+        android:contentDescription="@string/user_avatar"
         android:scaleType="fitCenter" />
 
     <!-- TODO - auto shrink the width of the message bubble when the message content is short -->
-    <LinearLayout
-        android:id="@+id/message_container"
-        style="@style/MessageContainer"
+    <TextView
+        android:id="@+id/content_txt"
+        style="@style/MessageContent"
         android:layout_alignTop="@id/avatar_img"
         android:layout_marginStart="@dimen/margin_normal"
         android:layout_marginEnd="@dimen/margin_huge"
         android:layout_toEndOf="@id/avatar_img"
-        android:background="@drawable/bg_gray_stroke_corner">
+        android:background="@drawable/bg_gray_stroke_corner" />
 
-        <!-- TODO - write a custom view to display both name and content -->
-        <TextView
-            android:id="@+id/name_txt"
-            style="@style/MessageName" />
-
-        <TextView
-            android:id="@+id/content_txt"
-            style="@style/MessageContent" />
-    </LinearLayout>
-
+    <!-- TODO - add AttachmentViews directly into the root view -->
     <LinearLayout
         android:id="@+id/attachments_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/message_container"
-        android:layout_alignStart="@id/message_container"
-        android:layout_alignEnd="@id/message_container"
+        android:layout_below="@id/content_txt"
+        android:layout_alignStart="@id/content_txt"
+        android:layout_alignEnd="@id/content_txt"
         android:orientation="vertical" />
 
 </RelativeLayout>

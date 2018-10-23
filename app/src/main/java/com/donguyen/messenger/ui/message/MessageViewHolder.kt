@@ -1,6 +1,10 @@
 package com.donguyen.messenger.ui.message
 
 import android.content.Context
+import android.graphics.Typeface.BOLD
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,18 +31,30 @@ abstract class MessageViewHolder(view: View,
                                  var listener: OnDeleteAttachmentListener? = null)
     : RecyclerView.ViewHolder(view) {
 
-    protected val nameTxt: TextView = view.findViewById(R.id.name_txt)
     private val contentTxt: TextView = view.findViewById(R.id.content_txt)
     private val attachmentsContainer: LinearLayout = view.findViewById(R.id.attachments_container)
 
+    private val meString = view.context.getString(R.string.me)
     private val menuItems = arrayOf<CharSequence>(view.context.getString(R.string.delete_attachment))
 
     private val attachmentViewPool = AttachmentViewPool(view.context)
 
     open fun bind(message: Message, position: Int, isActivated: Boolean) {
         itemView.isActivated = isActivated
+
         // TODO - check again on how to handle special characters
-        contentTxt.text = message.content.replace("\n", "", true)
+        // merge user name and message content
+        val userName = if (message.user.id == 1L) meString else message.user.name
+        val contentFormatted = message.content.replace("\n", "")
+        val contentFull = itemView.context.getString(R.string.message_format, userName, contentFormatted)
+
+        // apply bold span on user name
+        val sb = SpannableStringBuilder(contentFull)
+        val bss = StyleSpan(BOLD)
+        val endNamePos = contentFull.indexOf('\n')
+        sb.setSpan(bss, 0, endNamePos, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+
+        contentTxt.text = sb
 
         // create enough AttachmentView in the container
         val viewCount = attachmentsContainer.childCount
@@ -130,13 +146,7 @@ abstract class MessageViewHolder(view: View,
 
 class MyMessageViewHolder(view: View, adapter: MessagesAdapter,
                           listener: OnDeleteAttachmentListener? = null)
-    : MessageViewHolder(view, adapter, listener) {
-
-    override fun bind(message: Message, position: Int, isActivated: Boolean) {
-        super.bind(message, position, isActivated)
-        nameTxt.setText(R.string.me)
-    }
-}
+    : MessageViewHolder(view, adapter, listener)
 
 class TheirMessageViewHolder(view: View, adapter: MessagesAdapter,
                              listener: OnDeleteAttachmentListener? = null)
@@ -146,7 +156,6 @@ class TheirMessageViewHolder(view: View, adapter: MessagesAdapter,
 
     override fun bind(message: Message, position: Int, isActivated: Boolean) {
         super.bind(message, position, isActivated)
-        nameTxt.text = message.user.name
         GlideApp.with(avatarImg.context)
                 .load(message.user.avatarUrl)
                 .placeholder(R.drawable.bg_gray_solid_circle)

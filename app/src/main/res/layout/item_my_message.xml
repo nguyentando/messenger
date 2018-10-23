@@ -4,26 +4,16 @@
     android:orientation="vertical">
 
     <!-- TODO - auto shrink the width of the message bubble when the message content is short -->
-    <LinearLayout
-        android:id="@+id/message_container"
-        style="@style/MessageContainer"
+    <!-- TODO - from the 2nd line of text, they should be left aligned with the 1st line -->
+    <TextView
+        android:id="@+id/content_txt"
+        style="@style/MessageContent"
         android:layout_gravity="end"
         android:layout_marginStart="@dimen/my_message_margin_start"
-        android:background="@drawable/bg_gray_solid_corner">
+        android:background="@drawable/bg_gray_solid_corner"
+        android:gravity="end" />
 
-        <!-- TODO - write a custom view to display both name and content -->
-        <TextView
-            android:id="@+id/name_txt"
-            style="@style/MessageName"
-            android:gravity="end" />
-
-        <!-- TODO - from the 2nd line of text, they should be left aligned with the 1st line -->
-        <TextView
-            android:id="@+id/content_txt"
-            style="@style/MessageContent"
-            android:gravity="end" />
-    </LinearLayout>
-
+    <!-- TODO - add AttachmentViews directly into the root view -->
     <LinearLayout
         android:id="@+id/attachments_container"
         android:layout_width="match_parent"
