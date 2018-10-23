@@ -7,4 +7,35 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- For messages screen -->
+    <style name="MessageItem">
+        <item name="android:paddingTop">@dimen/margin_tiny</item>
+        <item name="android:paddingStart">@dimen/margin_normal</item>
+        <item name="android:paddingEnd">@dimen/margin_normal</item>
+        <item name="android:paddingBottom">@dimen/margin_tiny</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="MessageContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">@dimen/margin_small</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="MessageName">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textColor">@color/gray_dark</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="MessageContent">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textColor">@color/gray_dark</item>
+        <item name="android:layout_marginTop">@dimen/margin_small</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
 </resources>

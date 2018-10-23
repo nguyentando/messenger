@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Margin ******************************************************************************** -->
+    <dimen name="margin_huge">48dp</dimen>
+    <dimen name="margin_large">32dp</dimen>
+    <dimen name="margin_medium">24dp</dimen>
+    <dimen name="margin_normal">16dp</dimen>
+    <dimen name="margin_small">10dp</dimen>
+    <dimen name="margin_tiny">8dp</dimen>
+
+    <!-- ImageView ***************************************************************************** -->
+    <dimen name="img_size_huge">112dp</dimen>
+    <dimen name="img_size_large">96dp</dimen>
+    <dimen name="img_size_medium">80dp</dimen>
+    <dimen name="img_size_normal">64dp</dimen>
+    <dimen name="img_size_small">48dp</dimen>
+    <dimen name="img_size_tiny">32dp</dimen>
+
+    <!-- Custom ******************************************************************************** -->
+    <dimen name="stroke_width">2dp</dimen>
+    <dimen name="corner_size">5dp</dimen>
+
+    <!-- margin_normal + btn_size_medium -->
+    <dimen name="my_message_margin_start">64dp</dimen>
+</resources>

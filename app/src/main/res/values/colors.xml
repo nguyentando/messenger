@@ -9,4 +9,8 @@
     <color name="blue_dark">#2B6DD9</color>
 
     <color name="pink_dark">#D81B60</color>
+
+    <color name="gray_light">#EAEAEA</color>
+    <color name="gray">#A5A5A5</color>
+    <color name="gray_dark">#6D6D6D</color>
 </resources>

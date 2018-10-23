@@ -44,6 +44,12 @@ class SeedDatabaseWorker(context: Context, workerParams: WorkerParameters)
                 if (message.attachments != null) {
                     message.attachments.forEach { attachment ->
                         attachment.messageId = message.id
+
+                        // don't know why Glide (and Picasso) can not load http urls.
+                        // https is fine.
+                        // use a temporary fix here. TODO - will look into it more
+                        attachment.url = attachment.url.replace("http", "https")
+                        attachment.thumbnailUrl = attachment.thumbnailUrl.replace("http", "https")
                     }
                     attachmentDao.insertItems(message.attachments)
                 }

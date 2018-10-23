@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Messenger</string>
+    <string name="me">Me</string>
 </resources>

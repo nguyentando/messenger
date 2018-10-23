@@ -16,14 +16,14 @@ import androidx.room.*
 data class AttachmentData(
 
     @PrimaryKey
-    val id: String,
+    var id: String,
 
-    val title: String,
+    var title: String,
 
-    val url: String,
+    var url: String,
 
     @ColumnInfo(name = "thumbnail_url")
-    val thumbnailUrl: String,
+    var thumbnailUrl: String,
 
     @ColumnInfo(name = "message_id")
     var messageId: Long

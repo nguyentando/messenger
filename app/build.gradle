@@ -53,7 +53,7 @@ dependencies {
     implementation core.dagger
     kapt core.daggerCompiler
 
-    // -------------------------------------- ARCHITECTURE COMPONENTS --------------------------------------------------
+    // -------------------------------------- ARCHITECTURE COMPONENTS ------------------------------
     // room
     implementation archComponents.room
     implementation archComponents.roomRxJava
@@ -68,4 +68,9 @@ dependencies {
 
     // -------------------------------------- SUPPORT LIBRARIES ------------------------------------
     implementation support.appCompat
+
+    // -------------------------------------- DEVELOPMENT ------------------------------------------
+    // glide
+    implementation development.glide
+    kapt development.glideCompiler
 }

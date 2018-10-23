@@ -30,6 +30,7 @@ ext {
 
     // development
     gsonVersion = '2.8.5'
+    glideVersion = '4.8.0'
 
     core = [
             kotlin        : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion",
@@ -68,6 +69,10 @@ ext {
     ]
 
     development = [
-            gson: "com.google.code.gson:gson:$gsonVersion"
+            gson         : "com.google.code.gson:gson:$gsonVersion",
+
+            // glide
+            glide        : "com.github.bumptech.glide:glide:$glideVersion",
+            glideCompiler: "com.github.bumptech.glide:compiler:$glideVersion"
     ]
 }
