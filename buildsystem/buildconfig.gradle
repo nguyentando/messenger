@@ -1,0 +1,37 @@
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+ext {
+    // sdk and tools
+    minSdkVersion = 21
+    targetSdkVersion = 28
+    compileSdkVersion = 28
+    buildToolsVersion = '28.0.2'
+    versionCode = 1
+    versionName = "1.0"
+
+    // core
+    rxKotlinVersion = '2.3.0'
+    rxAndroidVersion = '2.1.0'
+    ktxVersion = '1.0.0'
+
+    // support libraries
+    supportLibraryVersion = '1.0.0'
+
+    core = [
+            kotlin        : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion",
+            rxKotlin      : "io.reactivex.rxjava2:rxkotlin:$rxKotlinVersion",
+            rxAndroid     : "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion",
+
+            // ktx
+            ktxCore       : "androidx.core:core-ktx:$ktxVersion"
+    ]
+
+    supportLibraries = [
+            appCompat            : "androidx.appcompat:appcompat:$supportLibraryVersion"
+    ]
+}
