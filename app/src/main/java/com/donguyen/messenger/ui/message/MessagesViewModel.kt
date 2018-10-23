@@ -6,8 +6,8 @@ import androidx.paging.PagedList
 import com.donguyen.domain.model.Message
 import com.donguyen.domain.usecase.Failure
 import com.donguyen.domain.usecase.Success
+import com.donguyen.domain.usecase.attachment.DeleteAttachmentUseCase
 import com.donguyen.domain.usecase.message.DeleteMessagesUseCase
-import com.donguyen.domain.usecase.message.DeleteMessagesUseCase.Input
 import com.donguyen.domain.usecase.message.GetMessagesUseCase
 import com.donguyen.domain.util.None
 import com.donguyen.messenger.base.BaseViewModel
@@ -16,7 +16,8 @@ import com.donguyen.messenger.base.BaseViewModel
  * Created by DoNguyen on 23/10/18.
  */
 class MessagesViewModel(private val getMessagesUseCase: GetMessagesUseCase,
-                        private val deleteMessagesUseCase: DeleteMessagesUseCase)
+                        private val deleteMessagesUseCase: DeleteMessagesUseCase,
+                        private val deleteAttachmentUseCase: DeleteAttachmentUseCase)
     : BaseViewModel() {
 
     private val mViewState: MutableLiveData<MessagesViewState> = MutableLiveData()
@@ -38,6 +39,32 @@ class MessagesViewModel(private val getMessagesUseCase: GetMessagesUseCase,
                 .autoClear()
     }
 
+    fun deleteMessages(messageIds: Iterable<Long>) {
+        deleteMessagesUseCase.execute(DeleteMessagesUseCase.Input(messageIds))
+                .subscribe {
+                    when (it) {
+                        is Success -> {
+                            // the database will automatically notify about the changed to the UI
+                        }
+                        is Failure -> handleFailure(it.error)
+                    }
+                }
+                .autoClear()
+    }
+
+    fun deleteAttachment(attachmentId: String) {
+        deleteAttachmentUseCase.execute(DeleteAttachmentUseCase.Input(attachmentId))
+                .subscribe {
+                    when (it) {
+                        is Success -> {
+                            // the database will automatically notify about the changed to the UI
+                        }
+                        is Failure -> handleFailure(it.error)
+                    }
+                }
+                .autoClear()
+    }
+
     private fun handleGetMessagesSuccess(messages: PagedList<Message>) {
         mViewState.value = viewState.value?.copy(
                 loading = false,
@@ -51,18 +78,5 @@ class MessagesViewModel(private val getMessagesUseCase: GetMessagesUseCase,
                 loading = false,
                 error = error
         )
-    }
-
-    fun deleteMessages(messageIds: Iterable<Long>) {
-        deleteMessagesUseCase.execute(Input(messageIds))
-                .subscribe {
-                    when (it) {
-                        is Success -> {
-                            // the database will automatically notify about the changed to the UI
-                        }
-                        is Failure -> handleFailure(it.error)
-                    }
-                }
-                .autoClear()
     }
 }

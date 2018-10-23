@@ -19,7 +19,7 @@ class AttachmentView @JvmOverloads constructor(
         defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-    private var attachment: Attachment? = null
+    var attachment: Attachment? = null
 
     private val attachmentImg: ImageView
     private val attachmentTitleTxt: TextView
@@ -31,7 +31,7 @@ class AttachmentView @JvmOverloads constructor(
         attachmentTitleTxt = findViewById(R.id.attachment_title_txt)
     }
 
-    fun setAttachment(attachment: Attachment) {
+    fun updateAttachment(attachment: Attachment) {
         if (this.attachment == attachment) return
         this.attachment = attachment
         updateContent()

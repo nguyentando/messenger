@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.donguyen.domain.model.Attachment
 import com.donguyen.messenger.R
 import com.donguyen.messenger.ui.message.selection.MessageItemDetailsLookup
 import com.donguyen.messenger.ui.message.selection.MessageItemKeyProvider
@@ -21,7 +22,7 @@ import javax.inject.Inject
 /**
  * Created by DoNguyen on 23/10/18.
  */
-class MessagesActivity : AppCompatActivity() {
+class MessagesActivity : AppCompatActivity(), MessageViewHolder.OnDeleteAttachmentListener {
 
     @Inject
     lateinit var factory: MessagesVMFactory
@@ -65,7 +66,7 @@ class MessagesActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        messagesAdapter = MessagesAdapter().apply {
+        messagesAdapter = MessagesAdapter(this).apply {
             setHasStableIds(true)
         }
 
@@ -98,6 +99,10 @@ class MessagesActivity : AppCompatActivity() {
         if (state.error.isNotEmpty()) this.toast(state.error)
         // TODO - handle loading
     }
+
+    // ---------------------------------------------------------------------------------------------
+    // HANDLE DELETING MESSAGES
+    // ------------------------------------------------------------------------------------------ //
 
     private val selectionObserver = object : SelectionTracker.SelectionObserver<Long>() {
 
@@ -132,7 +137,7 @@ class MessagesActivity : AppCompatActivity() {
     private val actionModeController = object : ActionMode.Callback {
 
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
-            mode.menuInflater.inflate(R.menu.message_contextual_action_menu, menu)
+            mode.menuInflater.inflate(R.menu.menu_contextual_action_message, menu)
             return true
         }
 
@@ -142,7 +147,7 @@ class MessagesActivity : AppCompatActivity() {
 
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
             return when (item.itemId) {
-                R.id.menu_delete -> {
+                R.id.delete_menu_item -> {
                     deleteMessages(selectionTracker.selection)
                     mode.finish()
                     true
@@ -159,5 +164,13 @@ class MessagesActivity : AppCompatActivity() {
 
     private fun deleteMessages(messageIds: Iterable<Long>) {
         viewModel.deleteMessages(messageIds)
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // HANDLE DELETING AN ATTACHMENT
+    // ------------------------------------------------------------------------------------------ //
+
+    override fun onDeleteAttachment(attachment: Attachment) {
+        viewModel.deleteAttachment(attachment.id)
     }
 }

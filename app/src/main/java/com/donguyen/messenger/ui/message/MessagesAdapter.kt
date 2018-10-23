@@ -16,7 +16,8 @@ import com.donguyen.messenger.R
  *
  * Created by DoNguyen on 23/10/18.
  */
-class MessagesAdapter : PagedListAdapter<Message, MessageViewHolder>(COMPARATOR) {
+class MessagesAdapter(var listener: MessageViewHolder.OnDeleteAttachmentListener? = null)
+    : PagedListAdapter<Message, MessageViewHolder>(COMPARATOR) {
 
     var selectionTracker: SelectionTracker<Long>? = null
 
@@ -45,7 +46,7 @@ class MessagesAdapter : PagedListAdapter<Message, MessageViewHolder>(COMPARATOR)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
-        return MessageViewHolder.create(parent, viewType, this)
+        return MessageViewHolder.create(parent, viewType, this, listener)
     }
 
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
