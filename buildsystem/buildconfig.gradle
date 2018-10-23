@@ -19,6 +19,9 @@ ext {
     rxAndroidVersion = '2.1.0'
     ktxVersion = '1.0.0'
 
+    // architecture components
+    archVersion = '2.0.0-rc01'
+
     // support libraries
     supportLibraryVersion = '1.0.0'
 
@@ -29,6 +32,12 @@ ext {
 
             // ktx
             ktxCore       : "androidx.core:core-ktx:$ktxVersion"
+    ]
+
+    architectureComponents = [
+            // paging
+            paging             : "androidx.paging:paging-runtime:$archVersion",
+            pagingRxJava       : "androidx.paging:paging-rxjava2:$archVersion"
     ]
 
     supportLibraries = [
