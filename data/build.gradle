@@ -40,6 +40,9 @@ dependencies {
     implementation core.kotlin
     implementation core.rxKotlin
     implementation core.ktxCore
+    // dagger
+    implementation core.dagger
+    kapt core.daggerCompiler
 
     // -------------------------------------- ARCHITECTURE COMPONENTS ------------------------------
     // room
