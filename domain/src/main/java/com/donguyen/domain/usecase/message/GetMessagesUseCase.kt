@@ -13,7 +13,7 @@ import io.reactivex.Observable
  * Created by DoNguyen on 23/10/18.
  */
 class GetMessagesUseCase(private val messageRepository: MessageRepository,
-                         transformer: Transformer<Result<PagedList<Message>>>)
+                         transformer: Transformer<Result<PagedList<Message>>>? = null)
     : UseCase<None, PagedList<Message>>(transformer) {
 
     override fun buildObservable(input: None): Observable<Result<PagedList<Message>>> {

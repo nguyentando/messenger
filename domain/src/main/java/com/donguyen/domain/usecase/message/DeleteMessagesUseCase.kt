@@ -11,7 +11,7 @@ import io.reactivex.Observable
  * Created by DoNguyen on 23/10/18.
  */
 class DeleteMessagesUseCase(private val messageRepository: MessageRepository,
-                            transformer: Transformer<Result<Boolean>>)
+                            transformer: Transformer<Result<Boolean>>? = null)
     : UseCase<Input, Boolean>(transformer) {
 
     override fun buildObservable(input: Input): Observable<Result<Boolean>> {
