@@ -20,6 +20,7 @@
     <!-- Custom ******************************************************************************** -->
     <dimen name="stroke_width">2dp</dimen>
     <dimen name="corner_size">5dp</dimen>
+    <dimen name="attachment_card_elevation">4dp</dimen>
 
     <!-- margin_normal + btn_size_medium -->
     <dimen name="my_message_margin_start">64dp</dimen>

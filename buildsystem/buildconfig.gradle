@@ -11,8 +11,8 @@ ext {
     targetSdkVersion = 28
     compileSdkVersion = 28
     buildToolsVersion = '28.0.2'
-    versionCode = 1
-    versionName = "1.0"
+    versionCode = 2
+    versionName = "2.0"
 
     // core
     rxKotlinVersion = '2.3.0'
@@ -27,6 +27,7 @@ ext {
 
     // support libraries
     supportLibraryVersion = '1.0.0'
+    materialVersion = '1.0.0'
 
     // development
     gsonVersion = '2.8.5'
@@ -67,7 +68,9 @@ ext {
     supportLibraries = [
             appCompat            : "androidx.appcompat:appcompat:$supportLibraryVersion",
             recyclerView         : "androidx.recyclerview:recyclerview:$supportLibraryVersion",
-            recyclerViewSelection: "androidx.recyclerview:recyclerview-selection:$supportLibraryVersion"
+            recyclerViewSelection: "androidx.recyclerview:recyclerview-selection:$supportLibraryVersion",
+
+            materialDesign       : "com.google.android.material:material:$materialVersion"
     ]
 
     development = [

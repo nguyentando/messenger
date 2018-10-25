@@ -6,7 +6,7 @@ import io.reactivex.Observable
 /**
  * Created by DoNguyen on 23/10/18.
  */
-abstract class UseCase<Input, Output>(private val transformer: Transformer<Result<Output>>?) {
+abstract class UseCase<Input, Output>(private val transformer: Transformer<Result<Output>>? = null) {
 
     fun execute(input: Input): Observable<Result<Output>> {
         var result = buildObservable(input)

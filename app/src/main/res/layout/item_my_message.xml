@@ -18,10 +18,8 @@
     because when the message view become more complex, we have to change the root view -->
     <LinearLayout
         android:id="@+id/attachments_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/AttachmentContainer"
         android:layout_gravity="end"
-        android:layout_marginStart="@dimen/my_message_margin_start"
-        android:orientation="vertical" />
+        android:layout_marginStart="@dimen/my_message_margin_start" />
 
 </LinearLayout>

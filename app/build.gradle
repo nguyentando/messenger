@@ -70,6 +70,7 @@ dependencies {
     implementation support.appCompat
     implementation support.recyclerView
     implementation support.recyclerViewSelection
+    implementation support.materialDesign
 
     // -------------------------------------- DEVELOPMENT ------------------------------------------
     // glide
