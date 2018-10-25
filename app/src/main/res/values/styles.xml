@@ -6,6 +6,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="actionModeBackground">@color/colorPrimary</item>
+        <item name="android:colorControlHighlight">@color/blue_light</item>
+        <item name="colorControlHighlight">@color/blue_light</item>
 
     </style>
 
@@ -16,6 +18,8 @@
         <item name="android:paddingEnd">@dimen/margin_normal</item>
         <item name="android:paddingBottom">@dimen/margin_tiny</item>
         <item name="android:background">@drawable/bg_message_item</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
