@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -37,6 +37,15 @@
         <item name="android:textColor">@color/gray_dark</item>
         <item name="android:padding">@dimen/margin_small</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="AttachmentContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:clipChildren">false</item>
+        <item name="android:clipToPadding">false</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:paddingBottom">@dimen/attachment_card_elevation</item>
     </style>
 
 </resources>

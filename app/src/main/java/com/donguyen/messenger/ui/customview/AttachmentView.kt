@@ -3,11 +3,11 @@ package com.donguyen.messenger.ui.customview
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import com.donguyen.domain.model.Attachment
 import com.donguyen.messenger.R
 import com.donguyen.messenger.util.GlideApp
+import com.google.android.material.card.MaterialCardView
 
 
 /**
@@ -17,7 +17,7 @@ class AttachmentView @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
         defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr) {
+) : MaterialCardView(context, attrs, defStyleAttr) {
 
     var attachment: Attachment? = null
 
@@ -25,10 +25,12 @@ class AttachmentView @JvmOverloads constructor(
     private val attachmentTitleTxt: TextView
 
     init {
-        orientation = VERTICAL
-        setBackgroundResource(R.drawable.bg_gray_stroke_corner)
-        inflate(context, R.layout.view_attachment_image, this)
-        inflate(context, R.layout.view_attachment_title, this)
+        radius = context.resources.getDimensionPixelSize(R.dimen.corner_size).toFloat()
+        elevation = context.resources.getDimensionPixelSize(R.dimen.attachment_card_elevation).toFloat()
+        cardElevation = elevation
+        useCompatPadding = true
+
+        inflate(context, R.layout.view_attachment, this)
         attachmentImg = findViewById(R.id.attachment_img)
         attachmentTitleTxt = findViewById(R.id.attachment_title_txt)
     }

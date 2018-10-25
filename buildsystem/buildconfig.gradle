@@ -27,6 +27,7 @@ ext {
 
     // support libraries
     supportLibraryVersion = '1.0.0'
+    materialVersion = '1.0.0'
 
     // development
     gsonVersion = '2.8.5'
@@ -67,7 +68,9 @@ ext {
     supportLibraries = [
             appCompat            : "androidx.appcompat:appcompat:$supportLibraryVersion",
             recyclerView         : "androidx.recyclerview:recyclerview:$supportLibraryVersion",
-            recyclerViewSelection: "androidx.recyclerview:recyclerview-selection:$supportLibraryVersion"
+            recyclerViewSelection: "androidx.recyclerview:recyclerview-selection:$supportLibraryVersion",
+
+            materialDesign       : "com.google.android.material:material:$materialVersion"
     ]
 
     development = [
