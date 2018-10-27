@@ -24,20 +24,6 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="MessageContainer">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:padding">@dimen/margin_small</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="MessageName">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:textColor">@color/gray_dark</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
     <style name="MessageContent">
         <item name="android:layout_width">match_parent</item>
         <item name="android:textColor">@color/gray_dark</item>
@@ -49,6 +35,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:clipChildren">false</item>
+        <item name="android:animateLayoutChanges">true</item>
         <item name="android:clipToPadding">false</item>
         <item name="android:orientation">vertical</item>
         <item name="android:paddingBottom">@dimen/attachment_card_elevation</item>

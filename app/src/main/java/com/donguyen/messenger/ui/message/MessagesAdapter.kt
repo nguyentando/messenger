@@ -1,12 +1,18 @@
 package com.donguyen.messenger.ui.message
 
+import android.os.Bundle
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.ScaleAnimation
+import androidx.core.view.forEach
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.donguyen.domain.model.Message
 import com.donguyen.messenger.R
+import com.donguyen.messenger.ui.customview.AttachmentView
+import com.donguyen.messenger.util.SimpleAnimationListener
 
 /**
  * Note: PagedList is content-immutable. This means that, although new content can be loaded into
@@ -57,12 +63,45 @@ class MessagesAdapter(var listener: MessageViewHolder.OnAttachmentViewListener? 
         holder.bind(message, position, isSelected)
     }
 
+    override fun onBindViewHolder(holder: MessageViewHolder, position: Int, payloads: MutableList<Any>) {
+        val attachmentPayload = payloads.find {
+            it is Bundle && it.containsKey(KEY_DELETED_ATTACHMENT_ID)
+        }
+        if (attachmentPayload == null) {
+            onBindViewHolder(holder, position)
+            return
+        }
+
+        // for the item which the user just deleted an attachment from, we will run a scale animation,
+        // and remove the AttachmentView when the animation ended
+        val deletedAttachmentId = (attachmentPayload as Bundle).getString(KEY_DELETED_ATTACHMENT_ID)
+        holder.attachmentsContainer.forEach {
+            val attachmentView = it as AttachmentView
+            if (attachmentView.attachment?.id == deletedAttachmentId) {
+                val animation = ScaleAnimation(1f, 1f, 1f, 0f).apply {
+                    duration = 250
+                    fillAfter = true
+                    setAnimationListener(object : SimpleAnimationListener {
+                        override fun onAnimationEnd(animation: Animation?) {
+                            holder.attachmentsContainer.removeView(attachmentView)
+                            notifyItemChanged(holder.adapterPosition, mutableListOf<Any>())
+                        }
+                    })
+                }
+                attachmentView.startAnimation(animation)
+            }
+        }
+    }
+
     override fun onViewRecycled(holder: MessageViewHolder) {
         super.onViewRecycled(holder)
         holder.clear()
     }
 
     companion object {
+
+        private const val KEY_DELETED_ATTACHMENT_ID = "key_deleted_attachment_id"
+
         private val COMPARATOR = object : DiffUtil.ItemCallback<Message>() {
 
             override fun areItemsTheSame(oldItem: Message, newItem: Message): Boolean =
@@ -70,6 +109,23 @@ class MessagesAdapter(var listener: MessageViewHolder.OnAttachmentViewListener? 
 
             override fun areContentsTheSame(oldItem: Message, newItem: Message): Boolean =
                     oldItem == newItem
+
+            override fun getChangePayload(oldMessage: Message, newMessage: Message): Any? {
+                // find the deleted attachment id
+                oldMessage.attachments.forEach { oldAttachment ->
+                    val isDeleted = newMessage.attachments.none { newAttachment ->
+                        oldAttachment.id == newAttachment.id
+                    }
+
+                    if (isDeleted) {
+                        val payload = Bundle()
+                        payload.putString(KEY_DELETED_ATTACHMENT_ID, oldAttachment.id)
+                        return payload
+                    }
+                }
+
+                return null
+            }
         }
     }
 }
