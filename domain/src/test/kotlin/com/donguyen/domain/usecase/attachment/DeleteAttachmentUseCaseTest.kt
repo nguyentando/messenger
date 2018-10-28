@@ -31,6 +31,10 @@ class DeleteAttachmentUseCaseTest {
         deleteAttachmentUseCase = DeleteAttachmentUseCase(attachmentRepository, transformer)
     }
 
+    /**
+     * Test if DeleteAttachmentUseCase returns the exact result from its attachmentRepository
+     * when deleting an attachment succeeded
+     */
     @Test
     fun testDeleteAttachmentSucceeded() {
         // GIVEN
@@ -49,6 +53,10 @@ class DeleteAttachmentUseCaseTest {
                 .assertComplete()
     }
 
+    /**
+     * Test if DeleteAttachmentUseCase returns the exact result from its attachmentRepository
+     * when deleting an attachment failed
+     */
     @Test
     fun testDeleteAttachmentFailed() {
         // GIVEN
@@ -67,11 +75,15 @@ class DeleteAttachmentUseCaseTest {
                 .assertComplete()
     }
 
+    /**
+     * Test if DeleteAttachmentUseCase converts error into a Failure
+     * when its attachmentRepository threw an error
+     */
     @Test
     fun testDeleteAttachmentError() {
         // GIVEN
         val input = DeleteAttachmentUseCase.Input("attachmentId")
-        val throwable = Throwable("error")
+        val throwable = Throwable("delete attachment error")
         `when`(attachmentRepository.deleteAttachment(input.attachmentId))
                 .thenReturn(Observable.error(throwable))
 

@@ -9,6 +9,7 @@ import com.donguyen.domain.model.Message
 import com.donguyen.domain.repository.MessageRepository
 import com.donguyen.domain.usecase.Result
 import com.donguyen.domain.util.Mapper
+import com.donguyen.domain.util.None
 import io.reactivex.Observable
 
 /**
@@ -17,8 +18,8 @@ import io.reactivex.Observable
 class MessageRepositoryImpl(
         // can create a MessageDataSource interface when having multiple data sources
         private val messageDao: MessageDao,
-        private val messageWithAttachmentsToMessageMapper: Mapper<MessageWithAttachments, Message>
-) : MessageRepository {
+        private val messageWithAttachmentsToMessageMapper: Mapper<MessageWithAttachments, Message>)
+    : MessageRepository {
 
     override fun getMessages(): Observable<Result<PagedList<Message>>> {
         val dataSourceFactory = messageDao.getAllMessagesWithAttachments()
@@ -38,11 +39,11 @@ class MessageRepositoryImpl(
                 }
     }
 
-    override fun deleteMessages(messageIds: Iterable<Long>): Observable<Result<Boolean>> {
+    override fun deleteMessages(messageIds: Iterable<Long>): Observable<Result<None>> {
         val ids = messageIds.toList() // have to convert to list, because Room not support Iterable
         return Observable.fromCallable {
             messageDao.deleteMessages(ids)
-            Result.success(true)
+            Result.success(None())
         }
     }
 }
