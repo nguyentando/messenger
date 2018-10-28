@@ -11,9 +11,6 @@ import com.donguyen.data.repository.message.MessageWithAttachmentsToMessageMappe
 import com.donguyen.data.repository.user.UserDataToUserMapper
 import com.donguyen.data.repository.user.UserRepositoryImpl
 import com.donguyen.data.repository.user.UserToUserDataMapper
-import com.donguyen.domain.repository.AttachmentRepository
-import com.donguyen.domain.repository.MessageRepository
-import com.donguyen.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -29,30 +26,22 @@ class DataModule {
     * ------------------------------------------------------------------------------------------- */
     @Provides
     @Singleton
-    fun provideRoomDatabase(context: Context): AppDatabase {
-        return AppDatabase.getInstance(context)
-    }
+    fun provideRoomDatabase(context: Context) = AppDatabase.getInstance(context)
 
     /* ---------------------------------------------------------------------------------------------
     * DAO
     * ------------------------------------------------------------------------------------------- */
     @Provides
     @Singleton
-    fun provideMessageDao(database: AppDatabase): MessageDao {
-        return database.messageDao()
-    }
+    fun provideMessageDao(database: AppDatabase) = database.messageDao()
 
     @Provides
     @Singleton
-    fun provideAttachmentDao(database: AppDatabase): AttachmentDao {
-        return database.attachmentDao()
-    }
+    fun provideAttachmentDao(database: AppDatabase) = database.attachmentDao()
 
     @Provides
     @Singleton
-    fun provideUserDao(database: AppDatabase): UserDao {
-        return database.userDao()
-    }
+    fun provideUserDao(database: AppDatabase) = database.userDao()
 
     /* ---------------------------------------------------------------------------------------------
     * REPOSITORY
@@ -61,28 +50,20 @@ class DataModule {
     @Singleton
     fun provideMessageRepository(
             messageDao: MessageDao,
-            messageWithAttachmentsToMessageMapper: MessageWithAttachmentsToMessageMapper
-    ): MessageRepository {
+            messageWithAttachmentsToMessageMapper: MessageWithAttachmentsToMessageMapper) =
 
-        return MessageRepositoryImpl(
-                messageDao,
-                messageWithAttachmentsToMessageMapper)
-    }
+            MessageRepositoryImpl(messageDao, messageWithAttachmentsToMessageMapper)
 
     @Provides
     @Singleton
-    fun provideAttachmentRepository(attachmentDao: AttachmentDao): AttachmentRepository {
-        return AttachmentRepositoryImpl(attachmentDao)
-    }
+    fun provideAttachmentRepository(attachmentDao: AttachmentDao) = AttachmentRepositoryImpl(attachmentDao)
 
     @Provides
     @Singleton
     fun provideUserRepository(
             userDao: UserDao,
             userToUserDataMapper: UserToUserDataMapper,
-            userDataToUserMapper: UserDataToUserMapper
-    ): UserRepository {
+            userDataToUserMapper: UserDataToUserMapper) =
 
-        return UserRepositoryImpl(userDao, userToUserDataMapper, userDataToUserMapper)
-    }
+            UserRepositoryImpl(userDao, userToUserDataMapper, userDataToUserMapper)
 }

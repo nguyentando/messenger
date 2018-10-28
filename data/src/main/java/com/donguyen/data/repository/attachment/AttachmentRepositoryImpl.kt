@@ -3,6 +3,7 @@ package com.donguyen.data.repository.attachment
 import com.donguyen.data.db.dao.AttachmentDao
 import com.donguyen.domain.repository.AttachmentRepository
 import com.donguyen.domain.usecase.Result
+import com.donguyen.domain.util.None
 import io.reactivex.Observable
 
 /**
@@ -13,10 +14,10 @@ class AttachmentRepositoryImpl(
         private val attachmentDao: AttachmentDao
 ) : AttachmentRepository {
 
-    override fun deleteAttachment(attachmentId: String): Observable<Result<Boolean>> {
+    override fun deleteAttachment(attachmentId: String): Observable<Result<None>> {
         return Observable.fromCallable {
             attachmentDao.deleteById(attachmentId)
-            Result.success(true)
+            Result.success(None())
         }
     }
 }

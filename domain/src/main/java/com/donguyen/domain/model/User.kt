@@ -5,5 +5,4 @@ package com.donguyen.domain.model
  */
 data class User(var id: Long,
                 var name: String,
-                var avatarUrl: String
-)
+                var avatarUrl: String)

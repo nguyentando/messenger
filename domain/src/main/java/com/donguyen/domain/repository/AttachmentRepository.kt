@@ -1,6 +1,7 @@
 package com.donguyen.domain.repository
 
 import com.donguyen.domain.usecase.Result
+import com.donguyen.domain.util.None
 import io.reactivex.Observable
 
 /**
@@ -8,5 +9,5 @@ import io.reactivex.Observable
  */
 interface AttachmentRepository {
 
-    fun deleteAttachment(attachmentId: String): Observable<Result<Boolean>>
+    fun deleteAttachment(attachmentId: String): Observable<Result<None>>
 }

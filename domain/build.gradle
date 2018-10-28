@@ -4,6 +4,7 @@ apply plugin: 'kotlin'
 dependencies {
     def core = rootProject.ext.core
     def archComponents = rootProject.ext.architectureComponents
+    def test = rootProject.ext.test
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -15,6 +16,10 @@ dependencies {
     // paging
     implementation archComponents.paging
     implementation archComponents.pagingRxJava
+
+    // -------------------------------------- TESTING ----------------------------------------------
+    testImplementation test.junit
+    testImplementation test.mockito
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
