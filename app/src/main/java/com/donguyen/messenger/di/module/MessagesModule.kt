@@ -19,23 +19,19 @@ class MessagesModule {
     @Provides
     fun provideMessagesVMFactory(getMessagesUseCase: GetMessagesUseCase,
                                  deleteMessagesUseCase: DeleteMessagesUseCase,
-                                 deleteAttachmentUseCase: DeleteAttachmentUseCase)
-            : MessagesVMFactory {
-        return MessagesVMFactory(getMessagesUseCase, deleteMessagesUseCase, deleteAttachmentUseCase)
-    }
+                                 deleteAttachmentUseCase: DeleteAttachmentUseCase) =
+
+            MessagesVMFactory(getMessagesUseCase, deleteMessagesUseCase, deleteAttachmentUseCase)
 
     @Provides
-    fun provideGetMessagesUseCase(messageRepository: MessageRepository): GetMessagesUseCase {
-        return GetMessagesUseCase(messageRepository, AsyncTransformer())
-    }
+    fun provideGetMessagesUseCase(messageRepository: MessageRepository) =
+            GetMessagesUseCase(messageRepository, AsyncTransformer())
 
     @Provides
-    fun provideDeleteMessagesUseCase(messageRepository: MessageRepository): DeleteMessagesUseCase {
-        return DeleteMessagesUseCase(messageRepository, AsyncTransformer())
-    }
+    fun provideDeleteMessagesUseCase(messageRepository: MessageRepository) =
+            DeleteMessagesUseCase(messageRepository, AsyncTransformer())
 
     @Provides
-    fun provideDeleteAttachmentUseCase(attachmentRepository: AttachmentRepository): DeleteAttachmentUseCase {
-        return DeleteAttachmentUseCase(attachmentRepository, AsyncTransformer())
-    }
+    fun provideDeleteAttachmentUseCase(attachmentRepository: AttachmentRepository) =
+            DeleteAttachmentUseCase(attachmentRepository, AsyncTransformer())
 }

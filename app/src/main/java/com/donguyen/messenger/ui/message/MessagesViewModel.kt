@@ -44,7 +44,7 @@ class MessagesViewModel(private val getMessagesUseCase: GetMessagesUseCase,
                 .subscribe {
                     when (it) {
                         is Success -> {
-                            // the database will automatically notify about the changed to the UI
+                            // the database will automatically notify about the change to the UI
                         }
                         is Failure -> handleFailure(it.error)
                     }
@@ -57,7 +57,7 @@ class MessagesViewModel(private val getMessagesUseCase: GetMessagesUseCase,
                 .subscribe {
                     when (it) {
                         is Success -> {
-                            // the database will automatically notify about the changed to the UI
+                            // the database will automatically notify about the change to the UI
                         }
                         is Failure -> handleFailure(it.error)
                     }

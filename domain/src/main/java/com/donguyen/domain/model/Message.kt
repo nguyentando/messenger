@@ -7,5 +7,4 @@ data class Message(var id: Long,
                    var userId: Long,
                    var content: String,
                    var attachments: List<Attachment> = listOf(),
-                   var user: User
-)
+                   var user: User)

@@ -33,6 +33,10 @@ ext {
     gsonVersion = '2.8.5'
     glideVersion = '4.8.0'
 
+    // test
+    junitVersion = '4.12'
+    mockitoVersion = '2.23.0'
+
     core = [
             kotlin        : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion",
             rxKotlin      : "io.reactivex.rxjava2:rxkotlin:$rxKotlinVersion",
@@ -79,5 +83,10 @@ ext {
             // glide
             glide        : "com.github.bumptech.glide:glide:$glideVersion",
             glideCompiler: "com.github.bumptech.glide:compiler:$glideVersion"
+    ]
+
+    test = [
+            junit  : "junit:junit:$junitVersion",
+            mockito: "org.mockito:mockito-core:$mockitoVersion"
     ]
 }

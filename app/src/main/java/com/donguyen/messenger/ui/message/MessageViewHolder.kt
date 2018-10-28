@@ -31,7 +31,7 @@ abstract class MessageViewHolder(view: View,
     : RecyclerView.ViewHolder(view) {
 
     private val contentTxt: TextView = view.findViewById(R.id.content_txt)
-    private val attachmentsContainer: LinearLayout = view.findViewById(R.id.attachments_container)
+    val attachmentsContainer: LinearLayout = view.findViewById(R.id.attachments_container)
     private val meString = view.context.getString(R.string.me)
 
     private val attachmentViewPool = AttachmentViewPool(view.context)
