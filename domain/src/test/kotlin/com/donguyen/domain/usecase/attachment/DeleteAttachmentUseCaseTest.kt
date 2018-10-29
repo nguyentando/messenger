@@ -1,9 +1,9 @@
 package com.donguyen.domain.usecase.attachment
 
 import com.donguyen.domain.repository.AttachmentRepository
+import com.donguyen.domain.test.TestTransformer
 import com.donguyen.domain.usecase.Result
 import com.donguyen.domain.util.None
-import com.donguyen.domain.util.TestTransformer
 import io.reactivex.Observable
 import org.junit.Before
 import org.junit.Test

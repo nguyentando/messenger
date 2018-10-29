@@ -59,6 +59,7 @@ dependencies {
     implementation development.gson
 
     // -------------------------------------- TESTING ----------------------------------------------
+    testImplementation project(path: ":domain", configuration: 'testArtifacts')
     testImplementation test.junit
     testImplementation test.mockito
 }

@@ -11,8 +11,8 @@ import io.reactivex.Observable
  */
 class AttachmentRepositoryImpl(
         // can create an AttachmentDataSource interface when having multiple data sources
-        private val attachmentDao: AttachmentDao
-) : AttachmentRepository {
+        private val attachmentDao: AttachmentDao)
+    : AttachmentRepository {
 
     override fun deleteAttachment(attachmentId: String): Observable<Result<None>> {
         return Observable.fromCallable {
