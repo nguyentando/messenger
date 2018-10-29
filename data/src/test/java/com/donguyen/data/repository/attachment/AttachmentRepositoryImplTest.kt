@@ -30,7 +30,7 @@ class AttachmentRepositoryImplTest {
     }
 
     @Test
-    fun testDeleteAttachmentSucceeded() {
+    fun deleteAttachmentSucceeded() {
         // GIVEN attachmentDao return no error when deleting an attachment
         val attachmentId = "attachmentId"
 
@@ -46,7 +46,7 @@ class AttachmentRepositoryImplTest {
     }
 
     @Test
-    fun testDeleteAttachmentError() {
+    fun deleteAttachmentError() {
         // GIVEN attachmentDao return error when deleting an attachment
         val attachmentId = "attachmentId"
         val throwable = Exception("delete attachment error")

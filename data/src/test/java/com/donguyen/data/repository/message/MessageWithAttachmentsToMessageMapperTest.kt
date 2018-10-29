@@ -20,7 +20,7 @@ class MessageWithAttachmentsToMessageMapperTest {
             attachmentDataToAttachmentMapper, userDataToUserMapper)
 
     @Test
-    fun testReturnExpectedValue() {
+    fun returnExpectedValue() {
         // GIVEN
         val from = TestFactory.createMessageWithAttachments(1)
 

@@ -13,7 +13,7 @@ class AttachmentToAttachmentDataMapperTest {
     private val mapper = AttachmentToAttachmentDataMapper()
 
     @Test
-    fun testReturnExpectedValue() {
+    fun returnExpectedValue() {
         // GIVEN
         val attachment = TestFactory.createAttachment("attachmentId")
 

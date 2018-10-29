@@ -39,7 +39,7 @@ class GetMessagesUseCaseTest {
      * when getting messages succeeded
      */
     @Test
-    fun testGetMessagesSucceeded() {
+    fun getMessagesSucceeded() {
         // GIVEN
         val result = Result.success(createMockPagedList<Message>())
         `when`(messageRepository.getMessages())
@@ -60,7 +60,7 @@ class GetMessagesUseCaseTest {
      * when getting messages failed
      */
     @Test
-    fun testGetMessagesFailed() {
+    fun getMessagesFailed() {
         // GIVEN
         val result = Result.failure<PagedList<Message>>("get messages failed")
         `when`(messageRepository.getMessages())
@@ -81,7 +81,7 @@ class GetMessagesUseCaseTest {
      * when getting messages threw an error
      */
     @Test
-    fun testGetMessagesError() {
+    fun getMessagesError() {
         // GIVEN
         val throwable = Throwable("get messages error")
         `when`(messageRepository.getMessages())

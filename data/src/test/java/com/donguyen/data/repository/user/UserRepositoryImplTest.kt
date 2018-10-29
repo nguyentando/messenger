@@ -38,7 +38,7 @@ class UserRepositoryImplTest {
     * ------------------------------------------------------------------------------------------- */
 
     @Test
-    fun testInsertUsersSucceeded() {
+    fun insertUsersSucceeded() {
         // GIVEN userDao return no error when inserting users
         val users = arrayListOf(TestFactory.createUser(1))
 
@@ -54,7 +54,7 @@ class UserRepositoryImplTest {
     }
 
     @Test
-    fun testInsertUsersError() {
+    fun insertUsersError() {
         // GIVEN userDao return error when inserting users
         val users = arrayListOf(TestFactory.createUser(1))
         val usersData = userToUserDataMapper.mapFromList(users)
@@ -78,7 +78,7 @@ class UserRepositoryImplTest {
     * ------------------------------------------------------------------------------------------- */
 
     @Test
-    fun testGetUsersSucceeded() {
+    fun getUsersSucceeded() {
         // GIVEN userDao return no error when getting users
         val usersData = arrayListOf(TestFactory.createUserData(1))
         `when`(userDao.getUsers())
@@ -96,7 +96,7 @@ class UserRepositoryImplTest {
     }
 
     @Test
-    fun testGetUsersError() {
+    fun getUsersError() {
         // GIVEN userDao return error when getting users
         val throwable = Throwable("get users error")
         `when`(userDao.getUsers())

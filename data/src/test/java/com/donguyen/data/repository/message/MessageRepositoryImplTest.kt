@@ -38,7 +38,7 @@ class MessageRepositoryImplTest {
     * ------------------------------------------------------------------------------------------- */
 
     @Test
-    fun testDeleteMessagesSucceeded() {
+    fun deleteMessagesSucceeded() {
         // GIVEN messageDao return no error when deleting messages
         val messageIds = arrayListOf(1L)
 
@@ -54,7 +54,7 @@ class MessageRepositoryImplTest {
     }
 
     @Test
-    fun testInsertUsersError() {
+    fun insertUsersError() {
         // GIVEN messageDao return error when deleting messages
         val messageIds = arrayListOf(1L)
         val throwable = Throwable("delete messages error")

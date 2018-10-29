@@ -38,7 +38,7 @@ class DeleteMessagesUseCaseTest {
      * when deleting messages succeeded
      */
     @Test
-    fun testDeleteMessagesSucceeded() {
+    fun deleteMessagesSucceeded() {
         // GIVEN
         val input = DeleteMessagesUseCase.Input(getMessageIds())
         val result = Result.success(None())
@@ -60,7 +60,7 @@ class DeleteMessagesUseCaseTest {
      * when deleting messages failed
      */
     @Test
-    fun testDeleteMessagesFailed() {
+    fun deleteMessagesFailed() {
         // GIVEN
         val input = DeleteMessagesUseCase.Input(getMessageIds())
         val result = Result.failure<None>("delete messages failed")
@@ -82,7 +82,7 @@ class DeleteMessagesUseCaseTest {
      * when deleting messages threw an error
      */
     @Test
-    fun testDeleteMessagesError() {
+    fun deleteMessagesError() {
         // GIVEN
         val input = DeleteMessagesUseCase.Input(getMessageIds())
         val throwable = Throwable("delete messages error")

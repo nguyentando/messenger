@@ -13,7 +13,7 @@ class UserDataToUserMapperTest {
     private val mapper = UserDataToUserMapper()
 
     @Test
-    fun testReturnExpectedValue() {
+    fun returnExpectedValue() {
         // GIVEN
         val userData = TestFactory.createUserData(1)
 
