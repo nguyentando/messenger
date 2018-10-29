@@ -32,6 +32,8 @@ class MessagesViewModel(private val getMessagesUseCase: GetMessagesUseCase,
     fun loadMessages() {
         mViewState.value = viewState.value?.copy(loading = true)
         getMessagesUseCase.execute(None())
+                .doOnSubscribe { increaseIdlingResource() }
+                .doOnNext { decreaseIdlingResource() }
                 .subscribe {
                     when (it) {
                         is Success -> handleGetMessagesSuccess(it.data)
@@ -43,9 +45,15 @@ class MessagesViewModel(private val getMessagesUseCase: GetMessagesUseCase,
 
     fun deleteMessages(messageIds: Iterable<Long>) {
         deleteMessagesUseCase.execute(DeleteMessagesUseCase.Input(messageIds))
+                .doOnSubscribe { increaseIdlingResource() }
+                .doOnComplete { decreaseIdlingResource() }
                 .subscribe {
                     when (it) {
-                        is Success -> mEvents.value = DeleteMessagesSuccess()
+                        is Success -> {
+                            // because the data will be updated and decreaseIdlingResource will be called
+                            increaseIdlingResource()
+                            mEvents.value = DeleteMessagesSuccess()
+                        }
                         is Failure -> handleFailure(it.error)
                     }
                 }
@@ -54,9 +62,15 @@ class MessagesViewModel(private val getMessagesUseCase: GetMessagesUseCase,
 
     fun deleteAttachment(attachmentId: String) {
         deleteAttachmentUseCase.execute(DeleteAttachmentUseCase.Input(attachmentId))
+                .doOnSubscribe { increaseIdlingResource() }
+                .doOnComplete { decreaseIdlingResource() }
                 .subscribe {
                     when (it) {
-                        is Success -> mEvents.value = DeleteAttachmentSuccess()
+                        is Success -> {
+                            // because the data will be updated and decreaseIdlingResource will be called
+                            increaseIdlingResource()
+                            mEvents.value = DeleteAttachmentSuccess()
+                        }
                         is Failure -> handleFailure(it.error)
                     }
                 }

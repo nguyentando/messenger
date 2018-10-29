@@ -31,4 +31,15 @@ open class BaseViewModel : ViewModel() {
     override fun onCleared() {
         clearDisposables()
     }
+
+    /**
+     * To support testing
+     */
+    protected fun increaseIdlingResource() {
+        mEvents.value = IncreaseIdlingResource()
+    }
+
+    protected fun decreaseIdlingResource() {
+        mEvents.value = DecreaseIdlingResource()
+    }
 }

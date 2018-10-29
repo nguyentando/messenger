@@ -93,5 +93,6 @@ dependencies {
     androidTestImplementation test.rules
     // espresso
     androidTestImplementation test.espresso
+    androidTestImplementation test.espressoContrib
     implementation test.espressoIdlingResource
 }
