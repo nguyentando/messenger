@@ -38,7 +38,12 @@ abstract class MessageViewHolder(view: View,
 
     open fun bind(message: Message, position: Int, isActivated: Boolean) {
         itemView.isActivated = isActivated
+        bindMessageContent(message)
+        bindAttachments(message)
+        // TODO - save the attachment image ratio into the database to use later
+    }
 
+    private fun bindMessageContent(message: Message) {
         // TODO - check again on how to handle special characters
         // merge user name and message content
         val userName = if (message.user.id == 1L) meString else message.user.name
@@ -52,7 +57,9 @@ abstract class MessageViewHolder(view: View,
         sb.setSpan(bss, 0, endNamePos, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
 
         contentTxt.text = sb
+    }
 
+    private fun bindAttachments(message: Message) {
         // create enough AttachmentView in the container
         val viewCount = attachmentsContainer.childCount
         val attachmentCount = message.attachments.size
@@ -89,8 +96,6 @@ abstract class MessageViewHolder(view: View,
                 }
             }
         }
-
-        // TODO - save the attachment image ratio into the database to use later
     }
 
     fun getMessageItemDetails(): ItemDetailsLookup.ItemDetails<Long> {

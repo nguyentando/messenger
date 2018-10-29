@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -12,18 +11,20 @@ import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.donguyen.messenger.R
+import com.donguyen.messenger.base.BaseActivity
 import com.donguyen.messenger.ui.message.selection.MessageItemDetailsLookup
 import com.donguyen.messenger.ui.message.selection.MessageItemKeyProvider
 import com.donguyen.messenger.util.extension.irisApplication
 import com.donguyen.messenger.util.extension.show
 import com.donguyen.messenger.util.extension.toast
+import com.donguyen.messenger.util.rx.EventObserver
 import kotlinx.android.synthetic.main.activity_messages.*
 import javax.inject.Inject
 
 /**
  * Created by DoNguyen on 23/10/18.
  */
-class MessagesActivity : AppCompatActivity(), MessageViewHolder.OnAttachmentViewListener {
+class MessagesActivity : BaseActivity(), MessageViewHolder.OnAttachmentViewListener {
 
     @Inject
     lateinit var factory: MessagesVMFactory
@@ -45,6 +46,7 @@ class MessagesActivity : AppCompatActivity(), MessageViewHolder.OnAttachmentView
 
         initViews()
         observeViewState()
+        observeEvents()
 
         // prevent reloading when configuration changed
         if (savedInstanceState != null) {
@@ -101,6 +103,11 @@ class MessagesActivity : AppCompatActivity(), MessageViewHolder.OnAttachmentView
     private fun observeViewState() {
         viewModel.viewState.observe(this,
                 Observer { viewState -> handleViewState(viewState) })
+    }
+
+    private fun observeEvents() {
+        viewModel.events.observe(this,
+                EventObserver { event -> handleEvent(event) })
     }
 
     private fun handleViewState(state: MessagesViewState?) {

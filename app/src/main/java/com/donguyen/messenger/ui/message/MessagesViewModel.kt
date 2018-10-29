@@ -11,6 +11,8 @@ import com.donguyen.domain.usecase.message.DeleteMessagesUseCase
 import com.donguyen.domain.usecase.message.GetMessagesUseCase
 import com.donguyen.domain.util.None
 import com.donguyen.messenger.base.BaseViewModel
+import com.donguyen.messenger.base.DeleteAttachmentSuccess
+import com.donguyen.messenger.base.DeleteMessagesSuccess
 
 /**
  * Created by DoNguyen on 23/10/18.
@@ -43,9 +45,7 @@ class MessagesViewModel(private val getMessagesUseCase: GetMessagesUseCase,
         deleteMessagesUseCase.execute(DeleteMessagesUseCase.Input(messageIds))
                 .subscribe {
                     when (it) {
-                        is Success -> {
-                            // the database will automatically notify about the change to the UI
-                        }
+                        is Success -> mEvents.value = DeleteMessagesSuccess()
                         is Failure -> handleFailure(it.error)
                     }
                 }
@@ -56,9 +56,7 @@ class MessagesViewModel(private val getMessagesUseCase: GetMessagesUseCase,
         deleteAttachmentUseCase.execute(DeleteAttachmentUseCase.Input(attachmentId))
                 .subscribe {
                     when (it) {
-                        is Success -> {
-                            // the database will automatically notify about the change to the UI
-                        }
+                        is Success -> mEvents.value = DeleteAttachmentSuccess()
                         is Failure -> handleFailure(it.error)
                     }
                 }
