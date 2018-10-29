@@ -11,6 +11,8 @@ import com.donguyen.domain.usecase.message.DeleteMessagesUseCase
 import com.donguyen.domain.usecase.message.GetMessagesUseCase
 import com.donguyen.domain.util.None
 import com.donguyen.messenger.base.BaseViewModel
+import com.donguyen.messenger.base.DeleteAttachmentSuccess
+import com.donguyen.messenger.base.DeleteMessagesSuccess
 
 /**
  * Created by DoNguyen on 23/10/18.
@@ -30,6 +32,8 @@ class MessagesViewModel(private val getMessagesUseCase: GetMessagesUseCase,
     fun loadMessages() {
         mViewState.value = viewState.value?.copy(loading = true)
         getMessagesUseCase.execute(None())
+                .doOnSubscribe { increaseIdlingResource() }
+                .doOnNext { decreaseIdlingResource() }
                 .subscribe {
                     when (it) {
                         is Success -> handleGetMessagesSuccess(it.data)
@@ -41,10 +45,14 @@ class MessagesViewModel(private val getMessagesUseCase: GetMessagesUseCase,
 
     fun deleteMessages(messageIds: Iterable<Long>) {
         deleteMessagesUseCase.execute(DeleteMessagesUseCase.Input(messageIds))
+                .doOnSubscribe { increaseIdlingResource() }
+                .doOnComplete { decreaseIdlingResource() }
                 .subscribe {
                     when (it) {
                         is Success -> {
-                            // the database will automatically notify about the change to the UI
+                            // because the data will be updated and decreaseIdlingResource will be called
+                            increaseIdlingResource()
+                            mEvents.value = DeleteMessagesSuccess()
                         }
                         is Failure -> handleFailure(it.error)
                     }
@@ -54,10 +62,14 @@ class MessagesViewModel(private val getMessagesUseCase: GetMessagesUseCase,
 
     fun deleteAttachment(attachmentId: String) {
         deleteAttachmentUseCase.execute(DeleteAttachmentUseCase.Input(attachmentId))
+                .doOnSubscribe { increaseIdlingResource() }
+                .doOnComplete { decreaseIdlingResource() }
                 .subscribe {
                     when (it) {
                         is Success -> {
-                            // the database will automatically notify about the change to the UI
+                            // because the data will be updated and decreaseIdlingResource will be called
+                            increaseIdlingResource()
+                            mEvents.value = DeleteAttachmentSuccess()
                         }
                         is Failure -> handleFailure(it.error)
                     }

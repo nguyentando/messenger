@@ -14,6 +14,7 @@ android {
         targetSdkVersion root.targetSdkVersion
         versionCode root.versionCode
         versionName root.versionName
+        testInstrumentationRunner root.test.testInstrumentationRunner
     }
 
     buildTypes {
@@ -38,6 +39,7 @@ dependencies {
     def archComponents = rootProject.ext.architectureComponents
     def support = rootProject.ext.supportLibraries
     def development = rootProject.ext.development
+    def test = rootProject.ext.test
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -66,6 +68,9 @@ dependencies {
     implementation archComponents.lifecycle
     implementation archComponents.lifecycleCommonJava
 
+    // for testing
+    testImplementation archComponents.archTesting
+
     // -------------------------------------- SUPPORT LIBRARIES ------------------------------------
     implementation support.appCompat
     implementation support.recyclerView
@@ -76,4 +81,18 @@ dependencies {
     // glide
     implementation development.glide
     kapt development.glideCompiler
+
+    // -------------------------------------- TESTING ----------------------------------------------
+    testImplementation project(path: ":domain", configuration: 'testArtifacts')
+    testImplementation test.junit
+    testImplementation test.mockito
+
+    androidTestImplementation test.core
+    androidTestImplementation test.extension
+    androidTestImplementation test.runner
+    androidTestImplementation test.rules
+    // espresso
+    androidTestImplementation test.espresso
+    androidTestImplementation test.espressoContrib
+    implementation test.espressoIdlingResource
 }

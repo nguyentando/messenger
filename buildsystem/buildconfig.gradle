@@ -39,6 +39,7 @@ ext {
     testVersion = '1.0.0'
     testRunnerVersion = '1.1.0'
     testRulesVersion = '1.1.0'
+    espressoVersion = '3.1.0-beta02'
 
     core = [
             kotlin        : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion",
@@ -99,5 +100,10 @@ ext {
             extension                : "androidx.test.ext:junit:$testVersion",
             runner                   : "androidx.test:runner:$testRunnerVersion",
             rules                    : "androidx.test:rules:$testRulesVersion",
+
+            // espresso
+            espresso                 : "androidx.test.espresso:espresso-core:$espressoVersion",
+            espressoContrib          : "androidx.test.espresso:espresso-contrib:$espressoVersion",
+            espressoIdlingResource   : "androidx.test.espresso:espresso-idling-resource:$espressoVersion"
     ]
 }
