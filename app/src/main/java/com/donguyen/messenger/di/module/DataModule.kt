@@ -11,6 +11,9 @@ import com.donguyen.data.repository.message.MessageWithAttachmentsToMessageMappe
 import com.donguyen.data.repository.user.UserDataToUserMapper
 import com.donguyen.data.repository.user.UserRepositoryImpl
 import com.donguyen.data.repository.user.UserToUserDataMapper
+import com.donguyen.domain.repository.AttachmentRepository
+import com.donguyen.domain.repository.MessageRepository
+import com.donguyen.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -50,20 +53,23 @@ class DataModule {
     @Singleton
     fun provideMessageRepository(
             messageDao: MessageDao,
-            messageWithAttachmentsToMessageMapper: MessageWithAttachmentsToMessageMapper) =
+            messageWithAttachmentsToMessageMapper: MessageWithAttachmentsToMessageMapper)
+            : MessageRepository {
 
-            MessageRepositoryImpl(messageDao, messageWithAttachmentsToMessageMapper)
+        return MessageRepositoryImpl(messageDao, messageWithAttachmentsToMessageMapper)
+    }
 
     @Provides
     @Singleton
-    fun provideAttachmentRepository(attachmentDao: AttachmentDao) = AttachmentRepositoryImpl(attachmentDao)
+    fun provideAttachmentRepository(attachmentDao: AttachmentDao): AttachmentRepository =
+            AttachmentRepositoryImpl(attachmentDao)
 
     @Provides
     @Singleton
     fun provideUserRepository(
             userDao: UserDao,
             userToUserDataMapper: UserToUserDataMapper,
-            userDataToUserMapper: UserDataToUserMapper) =
+            userDataToUserMapper: UserDataToUserMapper): UserRepository =
 
             UserRepositoryImpl(userDao, userToUserDataMapper, userDataToUserMapper)
 }
