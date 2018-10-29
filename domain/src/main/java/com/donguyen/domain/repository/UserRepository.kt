@@ -2,6 +2,7 @@ package com.donguyen.domain.repository
 
 import com.donguyen.domain.model.User
 import com.donguyen.domain.usecase.Result
+import com.donguyen.domain.util.None
 import io.reactivex.Observable
 
 /**
@@ -9,7 +10,7 @@ import io.reactivex.Observable
  */
 interface UserRepository {
 
-    fun insertUsers(users: List<User>): Observable<Result<Boolean>>
+    fun insertUsers(users: List<User>): Observable<Result<None>>
 
     fun getUsers(): Observable<Result<List<User>>>
 }

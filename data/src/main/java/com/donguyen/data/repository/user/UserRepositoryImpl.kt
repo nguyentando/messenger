@@ -6,6 +6,7 @@ import com.donguyen.domain.model.User
 import com.donguyen.domain.repository.UserRepository
 import com.donguyen.domain.usecase.Result
 import com.donguyen.domain.util.Mapper
+import com.donguyen.domain.util.None
 import io.reactivex.Observable
 
 /**
@@ -14,13 +15,13 @@ import io.reactivex.Observable
 class UserRepositoryImpl(
         private val userDao: UserDao, // can create a UserDataSource interface when having multiple data sources
         private val userToUserDataMapper: Mapper<User, UserData>,
-        private val userDataToUserMapper: Mapper<UserData, User>
-) : UserRepository {
+        private val userDataToUserMapper: Mapper<UserData, User>)
+    : UserRepository {
 
-    override fun insertUsers(users: List<User>): Observable<Result<Boolean>> {
+    override fun insertUsers(users: List<User>): Observable<Result<None>> {
         return Observable.fromCallable {
             userDao.insertItems(userToUserDataMapper.mapFromList(users))
-            Result.success(true)
+            Result.success(None())
         }
     }
 

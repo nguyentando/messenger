@@ -1,15 +1,15 @@
 package com.donguyen.domain.usecase.message
 
 import com.donguyen.domain.repository.MessageRepository
+import com.donguyen.domain.test.TestTransformer
 import com.donguyen.domain.usecase.Result
 import com.donguyen.domain.util.None
-import com.donguyen.domain.util.TestTransformer
 import io.reactivex.Observable
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 
 /**
@@ -38,11 +38,11 @@ class DeleteMessagesUseCaseTest {
      * when deleting messages succeeded
      */
     @Test
-    fun testDeleteMessagesSucceeded() {
+    fun deleteMessagesSucceeded() {
         // GIVEN
         val input = DeleteMessagesUseCase.Input(getMessageIds())
         val result = Result.success(None())
-        Mockito.`when`(messageRepository.deleteMessages(input.messageIds))
+        `when`(messageRepository.deleteMessages(input.messageIds))
                 .thenReturn(Observable.just(result))
 
         // WHEN
@@ -60,11 +60,11 @@ class DeleteMessagesUseCaseTest {
      * when deleting messages failed
      */
     @Test
-    fun testDeleteMessagesFailed() {
+    fun deleteMessagesFailed() {
         // GIVEN
         val input = DeleteMessagesUseCase.Input(getMessageIds())
         val result = Result.failure<None>("delete messages failed")
-        Mockito.`when`(messageRepository.deleteMessages(input.messageIds))
+        `when`(messageRepository.deleteMessages(input.messageIds))
                 .thenReturn(Observable.just(result))
 
         // WHEN
@@ -82,11 +82,11 @@ class DeleteMessagesUseCaseTest {
      * when deleting messages threw an error
      */
     @Test
-    fun testDeleteMessagesError() {
+    fun deleteMessagesError() {
         // GIVEN
         val input = DeleteMessagesUseCase.Input(getMessageIds())
         val throwable = Throwable("delete messages error")
-        Mockito.`when`(messageRepository.deleteMessages(input.messageIds))
+        `when`(messageRepository.deleteMessages(input.messageIds))
                 .thenReturn(Observable.error(throwable))
 
         // WHEN

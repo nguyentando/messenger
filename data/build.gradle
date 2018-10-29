@@ -12,6 +12,7 @@ android {
         targetSdkVersion root.targetSdkVersion
         versionCode root.versionCode
         versionName root.versionName
+        testInstrumentationRunner root.test.testInstrumentationRunner
     }
 
     compileOptions {
@@ -25,11 +26,25 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    sourceSets {
+        test {
+            // include the share folder into test code
+            java.srcDirs += "$projectDir/src/share"
+        }
+
+        androidTest {
+            // include the share folder into androidTest code
+            java.srcDirs += "$projectDir/src/share"
+        }
+    }
 }
 
 dependencies {
     def core = rootProject.ext.core
     def archComponents = rootProject.ext.architectureComponents
+    def development = rootProject.ext.development
+    def test = rootProject.ext.test
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -55,6 +70,19 @@ dependencies {
     // work manager
     implementation archComponents.workManager
 
+    // for testing
+    androidTestImplementation archComponents.archTesting
+
     // -------------------------------------- DEVELOPMENT ------------------------------------------
     implementation development.gson
+
+    // -------------------------------------- TESTING ----------------------------------------------
+    testImplementation project(path: ":domain", configuration: 'testArtifacts')
+    testImplementation test.junit
+    testImplementation test.mockito
+
+    androidTestImplementation test.core
+    androidTestImplementation test.extension
+    androidTestImplementation test.runner
+    androidTestImplementation test.rules
 }

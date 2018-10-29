@@ -36,6 +36,9 @@ ext {
     // test
     junitVersion = '4.12'
     mockitoVersion = '2.23.0'
+    testVersion = '1.0.0'
+    testRunnerVersion = '1.1.0'
+    testRulesVersion = '1.1.0'
 
     core = [
             kotlin        : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion",
@@ -63,10 +66,12 @@ ext {
             // lifecycle
             lifecycle          : "androidx.lifecycle:lifecycle-extensions:$archVersion",
             lifecycleCommonJava: "androidx.lifecycle:lifecycle-common-java8:$archVersion",
-            lifecycleTestHelper: "androidx.arch.core:core-testing:$archVersion",
 
             // work manager
-            workManager        : "android.arch.work:work-runtime-ktx:$workManagerVersion"
+            workManager        : "android.arch.work:work-runtime-ktx:$workManagerVersion",
+
+            // architecture components testing
+            archTesting        : "androidx.arch.core:core-testing:$archVersion"
     ]
 
     supportLibraries = [
@@ -86,7 +91,13 @@ ext {
     ]
 
     test = [
-            junit  : "junit:junit:$junitVersion",
-            mockito: "org.mockito:mockito-core:$mockitoVersion"
+            junit                    : "junit:junit:$junitVersion",
+            mockito                  : "org.mockito:mockito-core:$mockitoVersion",
+
+            testInstrumentationRunner: "androidx.test.runner.AndroidJUnitRunner",
+            core                     : "androidx.test:core:$testVersion",
+            extension                : "androidx.test.ext:junit:$testVersion",
+            runner                   : "androidx.test:runner:$testRunnerVersion",
+            rules                    : "androidx.test:rules:$testRulesVersion",
     ]
 }

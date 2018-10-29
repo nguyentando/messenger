@@ -3,16 +3,16 @@ package com.donguyen.domain.usecase.message
 import androidx.paging.PagedList
 import com.donguyen.domain.model.Message
 import com.donguyen.domain.repository.MessageRepository
+import com.donguyen.domain.test.TestTransformer
+import com.donguyen.domain.test.createMockPagedList
 import com.donguyen.domain.usecase.Result
 import com.donguyen.domain.util.None
-import com.donguyen.domain.util.TestTransformer
-import com.donguyen.domain.util.createMockPagedList
 import io.reactivex.Observable
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 
 /**
@@ -39,10 +39,10 @@ class GetMessagesUseCaseTest {
      * when getting messages succeeded
      */
     @Test
-    fun testGetMessagesSucceeded() {
+    fun getMessagesSucceeded() {
         // GIVEN
         val result = Result.success(createMockPagedList<Message>())
-        Mockito.`when`(messageRepository.getMessages())
+        `when`(messageRepository.getMessages())
                 .thenReturn(Observable.just(result))
 
         // WHEN
@@ -60,10 +60,10 @@ class GetMessagesUseCaseTest {
      * when getting messages failed
      */
     @Test
-    fun testGetMessagesFailed() {
+    fun getMessagesFailed() {
         // GIVEN
         val result = Result.failure<PagedList<Message>>("get messages failed")
-        Mockito.`when`(messageRepository.getMessages())
+        `when`(messageRepository.getMessages())
                 .thenReturn(Observable.just(result))
 
         // WHEN
@@ -81,10 +81,10 @@ class GetMessagesUseCaseTest {
      * when getting messages threw an error
      */
     @Test
-    fun testGetMessagesError() {
+    fun getMessagesError() {
         // GIVEN
         val throwable = Throwable("get messages error")
-        Mockito.`when`(messageRepository.getMessages())
+        `when`(messageRepository.getMessages())
                 .thenReturn(Observable.error(throwable))
 
         // WHEN

@@ -11,5 +11,5 @@ import com.donguyen.data.model.AttachmentData
 interface AttachmentDao : BaseDao<AttachmentData> {
 
     @Query("DELETE FROM attachments WHERE id = :attachmentId")
-    fun deleteById(attachmentId: String)
+    fun deleteById(attachmentId: String): Int
 }

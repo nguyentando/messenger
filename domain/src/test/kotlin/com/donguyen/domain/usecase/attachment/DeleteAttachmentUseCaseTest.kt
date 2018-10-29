@@ -1,9 +1,9 @@
 package com.donguyen.domain.usecase.attachment
 
 import com.donguyen.domain.repository.AttachmentRepository
+import com.donguyen.domain.test.TestTransformer
 import com.donguyen.domain.usecase.Result
 import com.donguyen.domain.util.None
-import com.donguyen.domain.util.TestTransformer
 import io.reactivex.Observable
 import org.junit.Before
 import org.junit.Test
@@ -36,7 +36,7 @@ class DeleteAttachmentUseCaseTest {
      * when deleting an attachment succeeded
      */
     @Test
-    fun testDeleteAttachmentSucceeded() {
+    fun deleteAttachmentSucceeded() {
         // GIVEN
         val input = DeleteAttachmentUseCase.Input("attachmentId")
         val result = Result.success(None())
@@ -58,7 +58,7 @@ class DeleteAttachmentUseCaseTest {
      * when deleting an attachment failed
      */
     @Test
-    fun testDeleteAttachmentFailed() {
+    fun deleteAttachmentFailed() {
         // GIVEN
         val input = DeleteAttachmentUseCase.Input("attachmentId")
         val result = Result.failure<None>("delete attachment failed")
@@ -80,7 +80,7 @@ class DeleteAttachmentUseCaseTest {
      * when its attachmentRepository threw an error
      */
     @Test
-    fun testDeleteAttachmentError() {
+    fun deleteAttachmentError() {
         // GIVEN
         val input = DeleteAttachmentUseCase.Input("attachmentId")
         val throwable = Throwable("delete attachment error")
