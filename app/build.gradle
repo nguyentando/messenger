@@ -10,10 +10,10 @@ android {
 
     defaultConfig {
         applicationId "com.donguyen.messenger"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode rootProject.ext.versionCode
-        versionName rootProject.ext.versionName
+        minSdkVersion root.minSdkVersion
+        targetSdkVersion root.targetSdkVersion
+        versionCode root.versionCode
+        versionName root.versionName
     }
 
     buildTypes {
@@ -37,6 +37,7 @@ dependencies {
     def core = rootProject.ext.core
     def archComponents = rootProject.ext.architectureComponents
     def support = rootProject.ext.supportLibraries
+    def development = rootProject.ext.development
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -64,7 +65,6 @@ dependencies {
     // lifecycle
     implementation archComponents.lifecycle
     implementation archComponents.lifecycleCommonJava
-    testImplementation archComponents.lifecycleTestHelper
 
     // -------------------------------------- SUPPORT LIBRARIES ------------------------------------
     implementation support.appCompat

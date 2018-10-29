@@ -1,7 +1,7 @@
 package com.donguyen.data.repository.user
 
 import com.donguyen.data.db.dao.UserDao
-import com.donguyen.data.util.TestFactory
+import com.donguyen.data.test.TestFactory
 import com.donguyen.domain.usecase.Result
 import com.donguyen.domain.util.None
 import io.reactivex.Observable

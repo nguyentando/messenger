@@ -1,4 +1,4 @@
-package com.donguyen.data.util
+package com.donguyen.data.test
 
 import com.donguyen.data.model.AttachmentData
 import com.donguyen.data.model.MessageData

@@ -1,6 +1,6 @@
 package com.donguyen.data.repository.user
 
-import com.donguyen.data.util.TestFactory
+import com.donguyen.data.test.TestFactory
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

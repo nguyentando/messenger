@@ -25,11 +25,25 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    sourceSets {
+        test {
+            // include the share folder into test code
+            java.srcDirs += "$projectDir/src/share"
+        }
+
+        androidTest {
+            // include the share folder into androidTest code
+            java.srcDirs += "$projectDir/src/share"
+        }
+    }
 }
 
 dependencies {
     def core = rootProject.ext.core
     def archComponents = rootProject.ext.architectureComponents
+    def development = rootProject.ext.development
+    def test = rootProject.ext.test
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 

@@ -2,7 +2,7 @@ package com.donguyen.data.repository.message
 
 import com.donguyen.data.repository.attachment.AttachmentDataToAttachmentMapper
 import com.donguyen.data.repository.user.UserDataToUserMapper
-import com.donguyen.data.util.TestFactory
+import com.donguyen.data.test.TestFactory
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
