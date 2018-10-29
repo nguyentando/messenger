@@ -26,9 +26,8 @@ interface MessageDao : BaseDao<MessageData> {
                     "users.avatar_url AS from_user_avatar_url " +
                     "FROM messages INNER JOIN users ON messages.user_id = users.id"
     )
-
     fun getAllMessagesWithAttachments(): DataSource.Factory<Int, MessageWithAttachments>
 
     @Query("DELETE FROM messages WHERE id in (:messageIds)")
-    fun deleteMessages(messageIds: List<Long>)
+    fun deleteMessages(messageIds: List<Long>): Int
 }

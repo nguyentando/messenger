@@ -16,8 +16,8 @@ interface BaseDao<T> {
     fun insertItems(items: List<T>)
 
     @Delete
-    fun deleteItem(item: T)
+    fun deleteItem(item: T): Int
 
     @Delete
-    fun deleteItems(items: List<T>)
+    fun deleteItems(items: List<T>): Int
 }

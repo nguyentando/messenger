@@ -37,12 +37,21 @@ object TestFactory {
                     userId = userId,
                     content = "content_$messageId")
 
-    fun createMessageWithAttachments(messageId: Long) =
+    /**
+     * @attachmentId null if don't want to create attachment object
+     */
+    fun createMessageWithAttachments(messageId: Long,
+                                     userId: Long = messageId,
+                                     attachmentId: String? = messageId.toString()) =
             MessageWithAttachments().apply {
-                user = createUserData(1)
-                message = createMessageData(messageId, user!!.id)
-                val attachment = createAttachmentData("attachmentId", messageId)
-                attachments = arrayListOf(attachment)
+                user = createUserData(userId)
+                message = createMessageData(messageId, userId)
+                attachments = if (attachmentId != null) {
+                    val attachment = createAttachmentData(attachmentId, messageId)
+                    arrayListOf(attachment)
+                } else {
+                    arrayListOf()
+                }
             }
 
     /* ---------------------------------------------------------------------------------------------
