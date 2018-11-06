@@ -2,8 +2,8 @@ package com.donguyen.messenger.ui.message
 
 import android.os.Bundle
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import android.view.animation.ScaleAnimation
 import androidx.core.view.forEach
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.selection.SelectionTracker
@@ -78,8 +78,8 @@ class MessagesAdapter(var listener: MessageViewHolder.OnAttachmentViewListener? 
         holder.attachmentsContainer.forEach {
             val attachmentView = it as AttachmentView
             if (attachmentView.attachment?.id == deletedAttachmentId) {
-                val animation = ScaleAnimation(1f, 1f, 1f, 0f).apply {
                     duration = 250
+                val animation = AlphaAnimation(1f, 0f).apply {
                     fillAfter = true
                     setAnimationListener(object : SimpleAnimationListener {
                         override fun onAnimationEnd(animation: Animation?) {
