@@ -1,9 +1,10 @@
 package com.donguyen.messenger.ui.message
 
 import android.os.Bundle
+import android.provider.Settings
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import android.view.animation.ScaleAnimation
 import androidx.core.view.forEach
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.selection.SelectionTracker
@@ -27,6 +28,7 @@ class MessagesAdapter(var listener: MessageViewHolder.OnAttachmentViewListener? 
 
     var selectionTracker: SelectionTracker<Long>? = null
     var isEnableSelection = true
+    private var scaledDuration: Long = -1L
 
     override fun getItemId(position: Int): Long {
         // getItem will not be null, because we don't support placeholder
@@ -53,6 +55,12 @@ class MessagesAdapter(var listener: MessageViewHolder.OnAttachmentViewListener? 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
+        if (scaledDuration == -1L) {
+            // init the value of scaledDuration
+            val scale = Settings.Global.getFloat(parent.context.contentResolver,
+                    Settings.Global.ANIMATOR_DURATION_SCALE, 1.0f)
+            scaledDuration = (300 * scale).toLong()
+        }
         return MessageViewHolder.create(parent, viewType, this, listener)
     }
 
@@ -78,8 +86,8 @@ class MessagesAdapter(var listener: MessageViewHolder.OnAttachmentViewListener? 
         holder.attachmentsContainer.forEach {
             val attachmentView = it as AttachmentView
             if (attachmentView.attachment?.id == deletedAttachmentId) {
-                val animation = ScaleAnimation(1f, 1f, 1f, 0f).apply {
-                    duration = 250
+                val animation = AlphaAnimation(1f, 0f).apply {
+                    duration = scaledDuration
                     fillAfter = true
                     setAnimationListener(object : SimpleAnimationListener {
                         override fun onAnimationEnd(animation: Animation?) {
