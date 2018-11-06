@@ -21,7 +21,7 @@ abstract class BaseActivity : AppCompatActivity() {
     protected open fun handleEvent(event: Event<Any>) {
         when (event) {
             is IncreaseIdlingResource -> idlingResource.increment()
-            is DecreaseIdlingResource -> idlingResource.decrement()
+            is DecreaseIdlingResource -> if (!idlingResource.isIdleNow) idlingResource.decrement()
         }
     }
 }

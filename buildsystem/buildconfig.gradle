@@ -18,16 +18,18 @@ ext {
     rxKotlinVersion = '2.3.0'
     rxAndroidVersion = '2.1.0'
     ktxVersion = '1.0.0'
-    daggerVersion = '2.18'
+    daggerVersion = '2.19'
 
     // architecture components
-    archVersion = '2.0.0-rc01'
-    roomVersion = '2.1.0-alpha01'
+    roomVersion = '2.1.0-alpha02'
+    pagingVersion = '2.1.0-beta01'
+    lifecycleVersion = '2.0.0'
     workManagerVersion = '1.0.0-alpha10'
+    archTestingVersion = '2.0.0'
 
     // support libraries
     supportLibraryVersion = '1.0.0'
-    materialVersion = '1.0.0'
+    materialVersion = '1.1.0-alpha01'
 
     // development
     gsonVersion = '2.8.5'
@@ -39,7 +41,7 @@ ext {
     testVersion = '1.0.0'
     testRunnerVersion = '1.1.0'
     testRulesVersion = '1.1.0'
-    espressoVersion = '3.1.0-beta02'
+    espressoVersion = '3.1.0'
 
     core = [
             kotlin        : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion",
@@ -61,18 +63,18 @@ ext {
             roomCompiler       : "androidx.room:room-compiler:$roomVersion",
 
             // paging
-            paging             : "androidx.paging:paging-runtime:$archVersion",
-            pagingRxJava       : "androidx.paging:paging-rxjava2:$archVersion",
+            paging             : "androidx.paging:paging-runtime:$pagingVersion",
+            pagingRxJava       : "androidx.paging:paging-rxjava2:$pagingVersion",
 
             // lifecycle
-            lifecycle          : "androidx.lifecycle:lifecycle-extensions:$archVersion",
-            lifecycleCommonJava: "androidx.lifecycle:lifecycle-common-java8:$archVersion",
+            lifecycle          : "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion",
+            lifecycleCommonJava: "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion",
 
             // work manager
             workManager        : "android.arch.work:work-runtime-ktx:$workManagerVersion",
 
             // architecture components testing
-            archTesting        : "androidx.arch.core:core-testing:$archVersion"
+            archTesting        : "androidx.arch.core:core-testing:$archTestingVersion"
     ]
 
     supportLibraries = [
