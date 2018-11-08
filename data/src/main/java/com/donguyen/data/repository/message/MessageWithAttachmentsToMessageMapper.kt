@@ -15,7 +15,7 @@ import javax.inject.Singleton
 class MessageWithAttachmentsToMessageMapper @Inject constructor(
         private val attachmentDataToAttachmentMapper: AttachmentDataToAttachmentMapper,
         private val userDataToUserMapper: UserDataToUserMapper)
-    : Mapper<MessageWithAttachments, Message>() {
+    : Mapper<MessageWithAttachments, Message> {
 
     override fun mapFrom(from: MessageWithAttachments): Message {
         return Message(

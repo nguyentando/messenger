@@ -11,7 +11,14 @@ import io.reactivex.Observable
  */
 interface MessageRepository {
 
+    /**
+     * Get at messages in the database.
+     * @return a [Result] of all messages with lazy loading supported by wrapping in a [PagedList]
+     */
     fun getMessages(): Observable<Result<PagedList<Message>>>
 
+    /**
+     * Delete messages by ids.
+     */
     fun deleteMessages(messageIds: Iterable<Long>): Observable<Result<None>>
 }

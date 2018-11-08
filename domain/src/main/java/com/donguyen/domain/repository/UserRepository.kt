@@ -10,7 +10,13 @@ import io.reactivex.Observable
  */
 interface UserRepository {
 
+    /**
+     * Insert users.
+     */
     fun insertUsers(users: List<User>): Observable<Result<None>>
 
+    /**
+     * Get all users in the database.
+     */
     fun getUsers(): Observable<Result<List<User>>>
 }

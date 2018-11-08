@@ -10,7 +10,7 @@ import javax.inject.Singleton
  * Created by DoNguyen on 23/10/18.
  */
 @Singleton
-class UserDataToUserMapper @Inject constructor() : Mapper<UserData, User>() {
+class UserDataToUserMapper @Inject constructor() : Mapper<UserData, User> {
 
     override fun mapFrom(from: UserData): User {
         return User(
