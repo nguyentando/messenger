@@ -29,6 +29,13 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    sourceSets {
+        test {
+            // include the share folder from domain module
+            java.srcDirs += "$rootDir/domain/src/share"
+        }
+    }
+
     androidExtensions {
         experimental = true
     }
@@ -83,7 +90,6 @@ dependencies {
     kapt development.glideCompiler
 
     // -------------------------------------- TESTING ----------------------------------------------
-    testImplementation project(path: ":domain", configuration: 'testArtifacts')
     testImplementation test.junit
     testImplementation test.mockito
 
