@@ -1,6 +1,7 @@
 package com.donguyen.messenger.util.rx
 
 import androidx.lifecycle.Observer
+import com.donguyen.domain.util.extension.exhaustive
 import com.donguyen.messenger.base.Event
 
 /**
@@ -15,11 +16,11 @@ class EventObserver<T>(private val onEventUnhandledContent: (Event<T>) -> Unit) 
 
     override fun onChanged(event: Event<T>?) {
         when (event?.hasBeenHandled) {
-            true -> return
             false -> {
                 event.markHandled()
                 onEventUnhandledContent(event)
             }
-        }
+            else -> return
+        }.exhaustive
     }
 }

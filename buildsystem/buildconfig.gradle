@@ -24,7 +24,7 @@ ext {
     roomVersion = '2.1.0-alpha02'
     pagingVersion = '2.1.0-beta01'
     lifecycleVersion = '2.0.0'
-    workManagerVersion = '1.0.0-alpha10'
+    workManagerVersion = '1.0.0-alpha11'
     archTestingVersion = '2.0.0'
 
     // support libraries

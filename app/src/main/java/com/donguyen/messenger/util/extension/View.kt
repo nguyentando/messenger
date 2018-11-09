@@ -1,6 +1,7 @@
 package com.donguyen.messenger.util.extension
 
 import android.view.View
+import com.donguyen.domain.util.extension.exhaustive
 
 /**
  * Created by DoNguyen on 23/10/18.
@@ -23,5 +24,5 @@ fun View.show(isShow: Boolean) {
     when (isShow) {
         true -> show()
         false -> gone()
-    }
+    }.exhaustive
 }
