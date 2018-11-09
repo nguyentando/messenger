@@ -10,7 +10,7 @@ import javax.inject.Singleton
  * Created by DoNguyen on 23/10/18.
  */
 @Singleton
-class AttachmentDataToAttachmentMapper @Inject constructor() : Mapper<AttachmentData, Attachment>() {
+class AttachmentDataToAttachmentMapper @Inject constructor() : Mapper<AttachmentData, Attachment> {
 
     override fun mapFrom(from: AttachmentData): Attachment {
         return Attachment(

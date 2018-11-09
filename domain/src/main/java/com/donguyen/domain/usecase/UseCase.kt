@@ -10,6 +10,7 @@ abstract class UseCase<Input, Output>(private val transformer: Transformer<Resul
 
     fun execute(input: Input): Observable<Result<Output>> {
         var result = buildObservable(input)
+
         if (transformer != null) {
             result = result.compose(transformer)
         }

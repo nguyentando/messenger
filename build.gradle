@@ -18,7 +18,7 @@ buildscript {
 
 // for updating dependency versions (https://github.com/patrikerdes/gradle-use-latest-versions-plugin)
 plugins {
-    id 'se.patrikerdes.use-latest-versions' version '0.2.5'
+    id 'se.patrikerdes.use-latest-versions' version '0.2.6'
     id 'com.github.ben-manes.versions' version '0.20.0'
 }
 

@@ -31,20 +31,3 @@ sourceSets {
         java.srcDirs += "$projectDir/src/share"
     }
 }
-
-/**
- * create a testJar file which matches with the testArtifacts configuration
- * other modules can depends on this module test code by using:
- * testImplementation project (path: ":domain", configuration: 'testArtifacts')
- * https://discuss.gradle.org/t/how-do-i-declare-a-dependency-on-a-modules-test-code/7172/6
- */
-configurations {
-    testArtifacts
-}
-task testJar(type: Jar) {
-    baseName = "${project.name}-test"
-    from sourceSets.test.output
-}
-artifacts {
-    testArtifacts testJar
-}

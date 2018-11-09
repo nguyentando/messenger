@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.work.BackoffPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.donguyen.data.SeedDatabaseWorker
@@ -14,6 +15,7 @@ import com.donguyen.data.db.dao.UserDao
 import com.donguyen.data.model.AttachmentData
 import com.donguyen.data.model.MessageData
 import com.donguyen.data.model.UserData
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by DoNguyen on 23/10/18.
@@ -52,7 +54,9 @@ abstract class AppDatabase : RoomDatabase() {
                             // after the first run
                             // if the user cleared app data (by going to Settings/Apps)
                             // the database will be recreated and pre-populate data again
-                            val request = OneTimeWorkRequestBuilder<SeedDatabaseWorker>().build()
+                            val request = OneTimeWorkRequestBuilder<SeedDatabaseWorker>()
+                                    .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 5, TimeUnit.SECONDS)
+                                    .build()
                             WorkManager.getInstance().enqueue(request)
                         }
                     })

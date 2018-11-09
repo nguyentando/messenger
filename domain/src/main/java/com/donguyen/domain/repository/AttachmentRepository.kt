@@ -9,5 +9,8 @@ import io.reactivex.Observable
  */
 interface AttachmentRepository {
 
+    /**
+     * Delete an attachment by id.
+     */
     fun deleteAttachment(attachmentId: String): Observable<Result<None>>
 }

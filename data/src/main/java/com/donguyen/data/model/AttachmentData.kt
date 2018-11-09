@@ -7,10 +7,11 @@ import androidx.room.*
  */
 @Entity(
         tableName = "attachments",
-        foreignKeys = [ForeignKey(
-                entity = MessageData::class, parentColumns = ["id"], childColumns = ["message_id"],
-                onDelete = ForeignKey.CASCADE, onUpdate = ForeignKey.CASCADE
-        )],
+        foreignKeys = [
+            ForeignKey(
+                    entity = MessageData::class, parentColumns = ["id"], childColumns = ["message_id"],
+                    onDelete = ForeignKey.CASCADE, onUpdate = ForeignKey.CASCADE
+            )],
         indices = [Index("message_id")] // index this to avoid full table scans when the messages table is modified
 )
 data class AttachmentData(
@@ -26,5 +27,4 @@ data class AttachmentData(
         var thumbnailUrl: String,
 
         @ColumnInfo(name = "message_id")
-        var messageId: Long
-)
+        var messageId: Long)

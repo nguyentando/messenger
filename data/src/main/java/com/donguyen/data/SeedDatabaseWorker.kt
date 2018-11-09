@@ -40,26 +40,24 @@ class SeedDatabaseWorker(context: Context, workerParams: WorkerParameters)
 
             // insert attachments
             val attachmentDao = database.attachmentDao()
-            data.messages.forEach { message ->
-                if (message.attachments != null) {
-                    message.attachments.forEach { attachment ->
-                        attachment.messageId = message.id
+            data.messages.filter { it.attachments != null }.forEach { message ->
+                message.attachments!!.forEach { attachment ->
+                    attachment.messageId = message.id
 
-                        // don't know why Glide (and Picasso) can not load http urls.
-                        // https is fine.
-                        // use a temporary fix here. TODO - will look into it more
-                        attachment.url = attachment.url.replace("http", "https")
-                        attachment.thumbnailUrl = attachment.thumbnailUrl.replace("http", "https")
-                    }
-                    attachmentDao.insertItems(message.attachments)
+                    // don't know why Glide (and Picasso) can not load http urls.
+                    // https is fine.
+                    // use a temporary fix here. TODO - will look into it more
+                    attachment.url = attachment.url.replace("http", "https")
+                    attachment.thumbnailUrl = attachment.thumbnailUrl.replace("http", "https")
                 }
+                attachmentDao.insertItems(message.attachments)
             }
 
             Result.SUCCESS
 
         } catch (ex: Exception) {
             Log.e(TAG, "Error seeding database", ex)
-            Result.FAILURE
+            Result.RETRY
         } finally {
             jsonReader?.close()
         }
@@ -68,5 +66,4 @@ class SeedDatabaseWorker(context: Context, workerParams: WorkerParameters)
 
 private data class Data(
         val users: List<UserData>,
-        val messages: List<MessageData>
-)
+        val messages: List<MessageData>)

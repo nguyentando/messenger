@@ -16,26 +16,22 @@ object TestFactory {
     * DATA
     * ------------------------------------------------------------------------------------------- */
 
-    fun createAttachmentData(attachmentId: String, messageId: Long = 1) =
-            AttachmentData(
-                    id = attachmentId,
-                    title = "title_$attachmentId",
-                    url = "url_$attachmentId",
-                    thumbnailUrl = "thumbnail_$attachmentId",
-                    messageId = messageId)
+    fun createAttachmentData(attachmentId: String, messageId: Long = 1) = AttachmentData(
+            id = attachmentId,
+            title = "title_$attachmentId",
+            url = "url_$attachmentId",
+            thumbnailUrl = "thumbnail_$attachmentId",
+            messageId = messageId)
 
-    fun createUserData(userId: Long) =
-            UserData(
-                    id = userId,
-                    name = "name_$userId",
-                    avatarUrl = "avatarUrl_$userId"
-            )
+    fun createUserData(userId: Long) = UserData(
+            id = userId,
+            name = "name_$userId",
+            avatarUrl = "avatarUrl_$userId")
 
-    fun createMessageData(messageId: Long, userId: Long = 1) =
-            MessageData(
-                    id = messageId,
-                    userId = userId,
-                    content = "content_$messageId")
+    fun createMessageData(messageId: Long, userId: Long = 1) = MessageData(
+            id = messageId,
+            userId = userId,
+            content = "content_$messageId")
 
     /**
      * @attachmentId null if don't want to create attachment object
@@ -58,20 +54,17 @@ object TestFactory {
     * DOMAIN
     * ------------------------------------------------------------------------------------------- */
 
-    fun createAttachment(id: String, messageId: Long = 1) =
-            Attachment(
-                    id = id,
-                    title = "title_$id",
-                    url = "url_$id",
-                    thumbnailUrl = "thumbnail_$id",
-                    messageId = messageId)
+    fun createAttachment(id: String, messageId: Long = 1) = Attachment(
+            id = id,
+            title = "title_$id",
+            url = "url_$id",
+            thumbnailUrl = "thumbnail_$id",
+            messageId = messageId)
 
-    fun createUser(userId: Long) =
-            User(
-                    id = userId,
-                    name = "name_$userId",
-                    avatarUrl = "avatarUrl_$userId"
-            )
+    fun createUser(userId: Long) = User(
+            id = userId,
+            name = "name_$userId",
+            avatarUrl = "avatarUrl_$userId")
 
     /* ---------------------------------------------------------------------------------------------
     * PRESENTATION
