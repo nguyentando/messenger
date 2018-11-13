@@ -50,11 +50,7 @@ class MessagesViewModel(private val getMessagesUseCase: GetMessagesUseCase,
                 .doOnComplete { decreaseIdlingResource() }
                 .subscribe {
                     when (it) {
-                        is Success -> {
-                            // because the data will be updated and decreaseIdlingResource will be called
-                            increaseIdlingResource()
-                            mEvents.value = DeleteMessagesSuccess()
-                        }
+                        is Success -> mEvents.value = DeleteMessagesSuccess()
                         is Failure -> handleFailure(it.error)
                     }.exhaustive
                 }
@@ -67,11 +63,7 @@ class MessagesViewModel(private val getMessagesUseCase: GetMessagesUseCase,
                 .doOnComplete { decreaseIdlingResource() }
                 .subscribe {
                     when (it) {
-                        is Success -> {
-                            // because the data will be updated and decreaseIdlingResource will be called
-                            increaseIdlingResource()
-                            mEvents.value = DeleteAttachmentSuccess()
-                        }
+                        is Success -> mEvents.value = DeleteAttachmentSuccess()
                         is Failure -> handleFailure(it.error)
                     }.exhaustive
                 }
