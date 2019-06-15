@@ -8,8 +8,8 @@ import com.donguyen.messenger.ui.message.MessagesAdapter
  */
 class MessageItemKeyProvider(private val adapter: MessagesAdapter) : ItemKeyProvider<Long>(SCOPE_MAPPED) {
 
-    override fun getKey(position: Int): Long? {
-        return adapter.getMessage(position)?.id
+    override fun getKey(adapterPosition: Int): Long? {
+        return adapter.getItemId(adapterPosition)
     }
 
     override fun getPosition(key: Long): Int {

@@ -24,17 +24,21 @@ import javax.inject.Inject
 /**
  * Created by DoNguyen on 23/10/18.
  */
-class MessagesActivity : BaseActivity(), MessageViewHolder.OnAttachmentViewListener {
+class MessagesActivity : BaseActivity(), MessageViewHolder.OnAttachmentListener {
 
+    // view model
     @Inject
     lateinit var factory: MessagesVMFactory
     private lateinit var viewModel: MessagesViewModel
 
+    // adapter
     private lateinit var messagesAdapter: MessagesAdapter
+
+    // handle selecting and deleting messages
     private lateinit var selectionTracker: SelectionTracker<Long>
     private var actionMode: ActionMode? = null
 
-    // for handle deleting an attachment
+    // handle deleting an attachment
     private var selectedAttachmentId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,11 +82,11 @@ class MessagesActivity : BaseActivity(), MessageViewHolder.OnAttachmentViewListe
     }
 
     private fun initViews() {
+        val linearLayoutManager = LinearLayoutManager(this)
         messagesAdapter = MessagesAdapter(this).apply {
             setHasStableIds(true)
         }
 
-        val linearLayoutManager = LinearLayoutManager(this)
         recycler_view.apply {
             layoutManager = linearLayoutManager
             adapter = messagesAdapter
@@ -101,13 +105,15 @@ class MessagesActivity : BaseActivity(), MessageViewHolder.OnAttachmentViewListe
     }
 
     private fun observeViewState() {
-        viewModel.viewState.observe(this,
-                Observer { viewState -> handleViewState(viewState) })
+        viewModel.viewState.observe(this, Observer { viewState ->
+            handleViewState(viewState)
+        })
     }
 
     private fun observeEvents() {
-        viewModel.events.observe(this,
-                EventObserver { event -> handleEvent(event) })
+        viewModel.events.observe(this, EventObserver { event ->
+            handleEvent(event)
+        })
     }
 
     private fun handleViewState(state: MessagesViewState?) {
@@ -123,7 +129,9 @@ class MessagesActivity : BaseActivity(), MessageViewHolder.OnAttachmentViewListe
         progress_bar.show(state.loading)
 
         // handle error
-        if (state.error.isNotEmpty()) this.toast(state.error)
+        if (state.error.isNotEmpty()) {
+            toast(state.error)
+        }
     }
 
     // ---------------------------------------------------------------------------------------------

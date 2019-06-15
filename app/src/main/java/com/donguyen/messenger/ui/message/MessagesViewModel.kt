@@ -10,6 +10,7 @@ import com.donguyen.domain.usecase.attachment.DeleteAttachmentUseCase
 import com.donguyen.domain.usecase.message.DeleteMessagesUseCase
 import com.donguyen.domain.usecase.message.GetMessagesUseCase
 import com.donguyen.domain.util.None
+import com.donguyen.domain.util.extension.exhaustive
 import com.donguyen.messenger.base.BaseViewModel
 import com.donguyen.messenger.base.DeleteAttachmentSuccess
 import com.donguyen.messenger.base.DeleteMessagesSuccess
@@ -38,7 +39,7 @@ class MessagesViewModel(private val getMessagesUseCase: GetMessagesUseCase,
                     when (it) {
                         is Success -> handleGetMessagesSuccess(it.data)
                         is Failure -> handleFailure(it.error)
-                    }
+                    }.exhaustive
                 }
                 .autoClear()
     }
@@ -49,13 +50,9 @@ class MessagesViewModel(private val getMessagesUseCase: GetMessagesUseCase,
                 .doOnComplete { decreaseIdlingResource() }
                 .subscribe {
                     when (it) {
-                        is Success -> {
-                            // because the data will be updated and decreaseIdlingResource will be called
-                            increaseIdlingResource()
-                            mEvents.value = DeleteMessagesSuccess()
-                        }
+                        is Success -> mEvents.value = DeleteMessagesSuccess()
                         is Failure -> handleFailure(it.error)
-                    }
+                    }.exhaustive
                 }
                 .autoClear()
     }
@@ -66,13 +63,9 @@ class MessagesViewModel(private val getMessagesUseCase: GetMessagesUseCase,
                 .doOnComplete { decreaseIdlingResource() }
                 .subscribe {
                     when (it) {
-                        is Success -> {
-                            // because the data will be updated and decreaseIdlingResource will be called
-                            increaseIdlingResource()
-                            mEvents.value = DeleteAttachmentSuccess()
-                        }
+                        is Success -> mEvents.value = DeleteAttachmentSuccess()
                         is Failure -> handleFailure(it.error)
-                    }
+                    }.exhaustive
                 }
                 .autoClear()
     }
