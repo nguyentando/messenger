@@ -25,9 +25,9 @@ import java.util.*
 /**
  * Created by DoNguyen on 23/10/18.
  */
-abstract class MessageViewHolder(view: View,
+sealed class MessageViewHolder(view: View,
                                  private val adapter: MessagesAdapter,
-                                 var listener: OnAttachmentViewListener? = null)
+                                 var listener: OnAttachmentListener? = null)
     : RecyclerView.ViewHolder(view) {
 
     private val contentTxt: TextView = view.findViewById(R.id.content_txt)
@@ -111,7 +111,7 @@ abstract class MessageViewHolder(view: View,
     companion object {
         fun create(parent: ViewGroup, viewType: Int,
                    adapter: MessagesAdapter,
-                   listener: OnAttachmentViewListener? = null): MessageViewHolder {
+                   listener: OnAttachmentListener? = null): MessageViewHolder {
             val view = LayoutInflater.from(parent.context)
                     .inflate(viewType, parent, false)
 
@@ -143,17 +143,17 @@ abstract class MessageViewHolder(view: View,
         }
     }
 
-    interface OnAttachmentViewListener {
+    interface OnAttachmentListener {
         fun onAttachmentLongClicked(attachmentId: String)
     }
 }
 
 class MyMessageViewHolder(view: View, adapter: MessagesAdapter,
-                          listener: OnAttachmentViewListener? = null)
+                          listener: OnAttachmentListener? = null)
     : MessageViewHolder(view, adapter, listener)
 
 class TheirMessageViewHolder(view: View, adapter: MessagesAdapter,
-                             listener: OnAttachmentViewListener? = null)
+                             listener: OnAttachmentListener? = null)
     : MessageViewHolder(view, adapter, listener) {
 
     private val avatarImg: ImageView = view.findViewById(R.id.avatar_img)

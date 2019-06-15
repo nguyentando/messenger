@@ -61,15 +61,17 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideAttachmentRepository(attachmentDao: AttachmentDao): AttachmentRepository =
-            AttachmentRepositoryImpl(attachmentDao)
+    fun provideAttachmentRepository(attachmentDao: AttachmentDao): AttachmentRepository {
+        return AttachmentRepositoryImpl(attachmentDao)
+    }
 
     @Provides
     @Singleton
     fun provideUserRepository(
             userDao: UserDao,
             userToUserDataMapper: UserToUserDataMapper,
-            userDataToUserMapper: UserDataToUserMapper): UserRepository =
+            userDataToUserMapper: UserDataToUserMapper): UserRepository {
 
-            UserRepositoryImpl(userDao, userToUserDataMapper, userDataToUserMapper)
+        return UserRepositoryImpl(userDao, userToUserDataMapper, userDataToUserMapper)
+    }
 }

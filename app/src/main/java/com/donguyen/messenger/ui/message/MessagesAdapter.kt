@@ -23,31 +23,15 @@ import com.donguyen.messenger.util.SimpleAnimationListener
  *
  * Created by DoNguyen on 23/10/18.
  */
-class MessagesAdapter(var listener: MessageViewHolder.OnAttachmentViewListener? = null)
+class MessagesAdapter(var listener: MessageViewHolder.OnAttachmentListener? = null)
     : PagedListAdapter<Message, MessageViewHolder>(COMPARATOR) {
 
     var selectionTracker: SelectionTracker<Long>? = null
     var isEnableSelection = true
     private var scaledDuration: Long = -1L
 
-    override fun getItemId(position: Int): Long {
-        // getItem will not be null, because we don't support placeholder
-        return getItem(position)!!.id
-    }
-
-    fun getMessage(position: Int): Message? {
-        return super.getItem(position)
-    }
-
-    fun getAdapterPosition(messageId: Long): Int {
-        currentList?.forEachIndexed { position, message ->
-            if (message.id == messageId) return position
-        }
-        return RecyclerView.NO_POSITION
-    }
-
     override fun getItemViewType(position: Int): Int {
-        val userId = getItem(position)!!.userId
+        val userId = getMessage(position)?.userId
         return when (userId) {
             1L -> R.layout.item_my_message
             else -> R.layout.item_their_message
@@ -55,8 +39,8 @@ class MessagesAdapter(var listener: MessageViewHolder.OnAttachmentViewListener? 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
+        // init the value of scaledDuration
         if (scaledDuration == -1L) {
-            // init the value of scaledDuration
             val scale = Settings.Global.getFloat(parent.context.contentResolver,
                     Settings.Global.ANIMATOR_DURATION_SCALE, 1.0f)
             scaledDuration = (300 * scale).toLong()
@@ -66,7 +50,7 @@ class MessagesAdapter(var listener: MessageViewHolder.OnAttachmentViewListener? 
 
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
         // message is only null when we enabled placeholder in the recycler view
-        val message = getItem(position) ?: return
+        val message = getMessage(position) ?: return
         val isSelected = isEnableSelection && selectionTracker?.isSelected(message.id) ?: false
         holder.bind(message, position, isSelected)
     }
@@ -104,6 +88,40 @@ class MessagesAdapter(var listener: MessageViewHolder.OnAttachmentViewListener? 
     override fun onViewRecycled(holder: MessageViewHolder) {
         super.onViewRecycled(holder)
         holder.clear()
+    }
+
+    /**
+     * Get id of the item at an specified adapter position.
+     *
+     * @param [position] adapter position of the item
+     * @return id of the item
+     */
+    override fun getItemId(position: Int): Long {
+        // getItem will not be null, because we don't support placeholder
+        return getItem(position)!!.id
+    }
+
+    /**
+     * Get the message at a specified adapter position.
+     *
+     * @param [position] adapter position of the message
+     * @return the [Message] at that position
+     */
+    fun getMessage(position: Int): Message? {
+        return super.getItem(position)
+    }
+
+    /**
+     * Get adapter position of a message.
+     *
+     * @param [messageId] id of the message
+     * @return adapter position of the message
+     */
+    fun getAdapterPosition(messageId: Long): Int {
+        currentList?.forEachIndexed { position, message ->
+            if (message.id == messageId) return position
+        }
+        return RecyclerView.NO_POSITION
     }
 
     companion object {

@@ -13,8 +13,8 @@ class AppModule(context: Context) {
 
     private val appContext = context.applicationContext
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideAppContext(): Context {
         return appContext
     }

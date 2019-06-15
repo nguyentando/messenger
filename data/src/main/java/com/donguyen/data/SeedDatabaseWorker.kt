@@ -53,11 +53,11 @@ class SeedDatabaseWorker(context: Context, workerParams: WorkerParameters)
                 attachmentDao.insertItems(message.attachments)
             }
 
-            Result.SUCCESS
+            Result.success()
 
         } catch (ex: Exception) {
             Log.e(TAG, "Error seeding database", ex)
-            Result.RETRY
+            Result.retry()
         } finally {
             jsonReader?.close()
         }
